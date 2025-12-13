@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Content Management System')</title>
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@tabler/icons@1.119.0/iconfont/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('css/tabler.min.css') }}">
+    <script src="{{ asset('js/jquery.min.js')}}"></script>
+    
+    <style>
+        .navbar-brand-image {
+            height: 2rem;
+        }
+        .sidebar-active {
+            background-color: rgba(32, 107, 196, 0.06);
+            color: #206bc4;
+        }
+    </style>
+</head>
+<body>
+    <script src="{{ asset('js/demo-theme.min.js')}}"></script>
+    
+    <div class="page">
+        <!-- Sidebar -->
+        <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Logo/Brand -->
+                <h1 class="navbar-brand navbar-brand-autodark">
+                    <a href="/">
+                        <i class="ti ti-layout-dashboard text-primary" style="font-size: 2rem;"></i>
+                        <span class="ms-2">Content CMS</span>
+                    </a>
+                </h1>
+
+                <!-- User menu for mobile -->
+                <div class="navbar-nav flex-row d-lg-none">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                            <span class="avatar avatar-sm" style="background-image: url(https://ui-avatars.com/api/?name=Admin+User&background=206bc4&color=fff)"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-user me-2"></i>Profile
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-settings me-2"></i>Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-logout me-2"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Navigation -->
+                <div class="collapse navbar-collapse" id="sidebar-menu">
+                    <ul class="navbar-nav pt-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') ?? '/' }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-home"></i>
+                                </span>
+                                <span class="nav-link-title">Dashboard</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item dropdown {{ Request::routeIs('main-categories.*', 'sub-categories.*') ? 'active' : '' }}">
+                            <a class="nav-link dropdown-toggle" href="#navbar-categories" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="{{ Request::routeIs('main-categories.*', 'sub-categories.*') ? 'true' : 'false' }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-folder"></i>
+                                </span>
+                                <span class="nav-link-title">Categories</span>
+                            </a>
+                            <div class="dropdown-menu {{ Request::routeIs('main-categories.*', 'sub-categories.*') ? 'show' : '' }}" id="navbar-categories">
+                                <a class="dropdown-item {{ Request::routeIs('main-categories.*') ? 'active' : '' }}" href="{{ route('main-categories.index') }}">
+                                    <i class="ti ti-folder me-2"></i>Main Categories
+                                </a>
+                                <a class="dropdown-item {{ Request::routeIs('sub-categories.*') ? 'active' : '' }}" href="{{ route('sub-categories.index') }}">
+                                    <i class="ti ti-folders me-2"></i>Sub Categories
+                                </a>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::routeIs('links.*') ? 'active' : '' }}" href="{{ route('links.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-link"></i>
+                                </span>
+                                <span class="nav-link-title">Links</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::routeIs('content.*') ? 'active' : '' }}" href="{{ route('content.index') ?? '#' }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-layout-grid"></i>
+                                </span>
+                                <span class="nav-link-title">Content Blocks</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-files"></i>
+                                </span>
+                                <span class="nav-link-title">Media & Files</span>
+                            </a>
+                            <div class="dropdown-menu" id="navbar-extra">
+                                <a class="dropdown-item" href="#">
+                                    <i class="ti ti-photo me-2"></i>Images
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="ti ti-file me-2"></i>Documents
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#navbar-settings" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="ti ti-settings"></i>
+                                </span>
+                                <span class="nav-link-title">Settings</span>
+                            </a>
+                            <div class="dropdown-menu" id="navbar-settings">
+                                <a class="dropdown-item" href="#">
+                                    <i class="ti ti-user me-2"></i>Users
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="ti ti-key me-2"></i>Permissions
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="ti ti-adjustments me-2"></i>General Settings
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Top Header -->
+        <header class="navbar navbar-expand-md navbar-light d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-nav flex-row order-md-last">
+                    <!-- Dark Mode Toggle -->
+                    <div class="nav-item me-2">
+                        <a href="#" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="ti ti-moon"></i>
+                        </a>
+                        <a href="#" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="ti ti-sun"></i>
+                        </a>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="nav-item dropdown me-2">
+                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                            <i class="ti ti-bell"></i>
+                            <span class="badge bg-red"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Notifications</h3>
+                                </div>
+                                <div class="list-group list-group-flush list-group-hoverable">
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="status-dot status-dot-animated bg-red d-block"></span>
+                                            </div>
+                                            <div class="col text-truncate">
+                                                <a href="#" class="text-body d-block">No new notifications</a>
+                                                <div class="d-block text-muted text-truncate mt-n1">
+                                                    You're all caught up!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                            <span class="avatar avatar-sm" style="background-image: url(https://ui-avatars.com/api/?name=Admin+User&background=206bc4&color=fff)"></span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div>Admin User</div>
+                                <div class="mt-1 small text-muted">Administrator</div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-user me-2"></i>Profile
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-settings me-2"></i>Settings
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="ti ti-help me-2"></i>Help & Support
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-danger">
+                                <i class="ti ti-logout me-2"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="collapse navbar-collapse" id="navbar-search">
+                    <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
+                        <form action="#" method="get" autocomplete="off" novalidate class="flex-fill">
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <i class="ti ti-search"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="page-wrapper">
+            <!-- Page Header -->
+            @hasSection('page-header')
+                <div class="page-header d-print-none">
+                    <div class="container-xl">
+                        <div class="row g-2 align-items-center">
+                            <div class="col">
+                                <!-- Breadcrumb -->
+                                @hasSection('breadcrumb')
+                                    <div class="page-pretitle">
+                                        @yield('breadcrumb')
+                                    </div>
+                                @endif
+                                <h2 class="page-title">
+                                    @yield('page-title')
+                                </h2>
+                            </div>
+                            <!-- Page Actions -->
+                            @hasSection('page-actions')
+                                <div class="col-auto ms-auto d-print-none">
+                                    <div class="btn-list">
+                                        @yield('page-actions')
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Page Body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <!-- Success Alert -->
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <i class="ti ti-check icon alert-icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="alert-title">Success!</h4>
+                                    <div class="text-muted">{{ session('success') }}</div>
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
+
+                    <!-- Error Alert -->
+                    @if($errors->any())
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <i class="ti ti-alert-circle icon alert-icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="alert-title">Errors occurred</h4>
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
+
+                    <!-- Main Content -->
+                    @yield('content')
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    <div class="row text-center align-items-center">
+                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item">
+                                    Copyright &copy; {{ date('Y') }}
+                                    <a href="#" class="link-secondary">Content CMS</a>.
+                                    All rights reserved.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-auto ms-lg-auto">
+                            <div class="text-muted">
+                                Version 1.0.0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{{ asset('js/tabler.min.js')}}"></script>
+    
+    <!-- Initialize Tooltips -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+    
+    @stack('scripts')
+</body>
+</html>
