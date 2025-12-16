@@ -71,6 +71,20 @@ class NavigationComposer
                         ]
                     ]
                 ]
+                        ],
+            [
+                'name' => 'News',
+                'identifier' => 'wamco-news',
+                'pages' => [                  
+                    [
+                        'name' => 'Laterst Updates',
+                        'has_children' => false,
+                        'icon' => 'ti ti-mail',
+                        'children' => [
+                            ['name' => 'Latest Updates', 'route' => 'corprofile.Locations'],
+                        ]
+                    ] 
+                ]
             ]
         ];
 

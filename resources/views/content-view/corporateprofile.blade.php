@@ -1,1073 +1,1077 @@
 @extends('layouts.public')
-
-
+@section('title', 'Corporate Profile')
 @section('content')
-
 <main class="page-wrapper">
-        <div class="page-body">
-            <div class="" style="padding: 0px;">
-                 <div class="row row-cards" style="margin-right: 0px; margin-left: 0px;">                      
-                            <div class="col-12" style="padding: 0;">                         
-                                
-                            
-                            @if($heroData)
-        @include('components.templates.hero_with_image', ['data' => $heroData])
-    @endif
+    <div class="page-body">
+        <div style="padding: 0px;">
 
+            <style>
+                /* ========================================
+                   BASE RESET
+                   ======================================== */
+                *, *::before, *::after {
+                    box-sizing: border-box;
+                }
 
+                html, body {
+                    overflow-x: hidden;
+                    width: 100%;
+                }
 
+                :root {
+                    --primary-teal: #00D4C8;
+                    --primary-teal-dark: #00B8AD;
+                    --accent-gradient: linear-gradient(135deg, #1dc8e1 0%, #1fe9ba 100%);
+                    --text-dark: #1a1a1a;
+                    --text-gray: #555;
+                    --bg-gray: #f5f5f5;
+                    --bg-white: #ffffff;
+                }
 
+                /* ========================================
+                   SECTION - FULL WIDTH
+                   ======================================== */
+                .cp-section {
+                    width: 100%;
+                    padding: 60px 0;
+                }
 
-      <!-- Our Company Section -->
-      <section id="our-company" class="content-section py-5">      
-<style>
-/* Corporate Profile Custom Styles */
-:root {
-    --corprofile-primary: #00D4C8;
-    --corprofile-text: #333333;
-    --corprofile-text-light: #666666;
-    --corprofile-bg: #F5F5F5;
-}
+                .cp-section--gray {
+                    background-color: var(--bg-gray);
+                }
 
-.corprofile-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 60px 20px;
-    background-color: white;
-}
+                .cp-section--white {
+                    background-color: var(--bg-white);
+                }
 
-.corprofile-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
+                /* ========================================
+                   CONTAINER - CENTERED
+                   ======================================== */
+                .cp-container {
+                    width: 100%;
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    padding: 0 20px;
+                }
 
-.corprofile-header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--corprofile-text);
-    margin-bottom: 20px;
-}
+                /* ========================================
+                   DESCRIPTION SECTION
+                   ======================================== */
+                .cp-description {
+                    font-size: 1rem;
+                    color: var(--text-gray);
+                    line-height: 1.8;
+                    text-align: center;
+                }
 
-.corprofile-description {
-    font-size: 0.95rem;
-    color: var(--corprofile-text-light);
-    line-height: 1.7;
-    max-width: 900px;
-    margin: 0 auto;
-}
+                /* ========================================
+                   SECTION TITLE
+                   ======================================== */
+                .cp-section-title {
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    text-align: center;
+                    margin-bottom: 40px;
+                }
 
-.corprofile-video-container {
-    margin-bottom: 60px;
-    text-align: center;
-}
+                /* ========================================
+                   VISION / MISSION BLOCK
+                   ======================================== */
+                .vm-block {
+                    display: flex;
+                    align-items: center;
+                    gap: 40px;
+                    margin-bottom: 50px;
+                }
 
-.corprofile-video-container video {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
+                .vm-block:last-child {
+                    margin-bottom: 0;
+                }
 
-/* Section Styles */
-.corprofile-section {
-    margin-bottom: 80px;
-}
+                .vm-icon-box {
+                    width: 180px;
+                    height: 180px;
+                    background: var(--accent-gradient);
+                    border-radius: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
 
-.corprofile-section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--corprofile-text);
-    margin-bottom: 40px;
-    text-align: center;
-}
+                .vm-icon-box img {
+                    width: 90px;
+                    height: 90px;
+                    object-fit: contain;
+                    filter: brightness(0) invert(1);
+                }
 
-/* Icon Box Styles */
-.corprofile-icon-box {
-    background: linear-gradient(135deg, #00D4C8 0%, #00B8AD 100%);
-    border-radius: 15px;
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-    width: 100px;
-}
+                .vm-content {
+                    flex: 1;
+                }
 
-.corprofile-icon-box img {
-    max-width: 60px;
-    max-height: 60px;
-    height: auto;
-}
+                .vm-title {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 15px;
+                }
 
-/* Vision & Mission Styles */
-.corprofile-vm-box {
-    padding-left: 30px;
-}
+                .vm-text {
+                    font-size: 0.95rem;
+                    color: var(--text-gray);
+                    line-height: 1.7;
+                    margin: 0;
+                }
 
-.corprofile-vm-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--corprofile-text);
-    margin-bottom: 15px;
-}
+                /* ========================================
+                   OBJECTIVES
+                   ======================================== */
+                .obj-wrapper {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 40px;
+                }
 
-.corprofile-vm-text {
-    font-size: 0.95rem;
-    color: var(--corprofile-text-light);
-    line-height: 1.7;
-}
+                .obj-cards {
+                    flex: 1;
+                }
 
-/* Objectives Section */
-.corprofile-objectives-section {
-    background-color: var(--corprofile-bg);
-    padding: 50px 0;
-    margin-left: -20px;
-    margin-right: -20px;
-}
+                .obj-card {
+                    background: var(--bg-white);
+                    padding: 20px 25px;
+                    margin-bottom: 15px;
+                    border-left: 4px solid var(--text-dark);
+                    border-radius: 0;
+                }
 
-.corprofile-objective-card {
-    background-color: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-left: 3px solid var(--corprofile-primary);
-}
+                .obj-card:last-child {
+                    margin-bottom: 0;
+                }
 
-.corprofile-objective-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--corprofile-text);
-    margin-bottom: 8px;
-}
+                .obj-card-title {
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 8px;
+                }
 
-.corprofile-objective-desc {
-    font-size: 0.85rem;
-    color: var(--corprofile-text-light);
-    line-height: 1.6;
-}
+                .obj-card-desc {
+                    font-size: 0.9rem;
+                    color: var(--text-gray);
+                    line-height: 1.6;
+                    margin: 0;
+                }
 
-.corprofile-objectives-image {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+                .obj-image {
+                    width: 280px;
+                    flex-shrink: 0;
+                }
 
-.corprofile-objectives-image img {
-    max-width: 200px;
-    height: auto;
-}
+                .obj-image img {
+                    width: 100%;
+                    height: auto;
+                }
 
-/* List Styles with Checkmarks */
-.corprofile-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+                /* ========================================
+                   STRATEGIES / VALUES / PRINCIPLES
+                   ======================================== */
+                .list-block {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 40px;
+                }
 
-.corprofile-list-item {
-    padding: 12px 0;
-    padding-left: 35px;
-    position: relative;
-    font-size: 0.9rem;
-    color: var(--corprofile-text-light);
-    line-height: 1.6;
-}
+                .list-icon-box {
+                    width: 140px;
+                    height: 140px;
+                    background: var(--accent-gradient);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
 
-.corprofile-list-item::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    top: 12px;
-    width: 20px;
-    height: 20px;
-    background-color: var(--corprofile-primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 12px;
-}
+                .list-icon-box img {
+                    width: 70px;
+                    height: 70px;
+                    object-fit: contain;
+                    filter: brightness(0) invert(1);
+                }
 
-/* Numbered List Styles */
-.corprofile-numbered-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    counter-reset: corprofile-counter;
-}
+                .list-content {
+                    flex: 1;
+                }
 
-.corprofile-numbered-item {
-    padding: 12px 0;
-    padding-left: 40px;
-    position: relative;
-    font-size: 0.9rem;
-    color: var(--corprofile-text-light);
-    line-height: 1.6;
-    counter-increment: corprofile-counter;
-}
+                .list-title {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 20px;
+                }
 
-.corprofile-numbered-item::before {
-    content: counter(corprofile-counter);
-    position: absolute;
-    left: 0;
-    top: 12px;
-    width: 24px;
-    height: 24px;
-    background-color: var(--corprofile-primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 13px;
-}
+                .cp-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
 
-/* Strategies and Values Image Container */
-.corprofile-image-container {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+                .cp-list li {
+                    padding: 10px 0 10px 35px;
+                    position: relative;
+                    font-size: 0.95rem;
+                    color: var(--text-gray);
+                    line-height: 1.6;
+                }
 
-.corprofile-image-container img {
-    max-width: 200px;
-    height: auto;
-}
+                .cp-list li::before {
+                    content: "\f00c";
+                    font-family: "Font Awesome 6 Free";
+                    font-weight: 900;
+                    position: absolute;
+                    left: 0;
+                    top: 10px;
+                    width: 22px;
+                    height: 22px;
+                    background: var(--primary-teal);
+                    color: #fff;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 10px;
+                }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .corprofile-container {
-        padding: 40px 15px;
-    }
-    
-    .corprofile-header h1 {
-        font-size: 1.75rem;
-    }
-    
-    .corprofile-section-title {
-        font-size: 1.5rem;
-    }
-    
-    .corprofile-vm-box {
-        padding-left: 0;
-        margin-top: 20px;
-    }
-    
-    .corprofile-icon-box {
-        margin: 0 auto 20px;
-    }
-    
-    .corprofile-objectives-image,
-    .corprofile-image-container {
-        margin-top: 30px;
-    }
-}
+                .cp-numbered-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    counter-reset: num;
+                }
 
-@media (max-width: 576px) {
-    .corprofile-icon-box {
-        width: 80px;
-        height: 80px;
-        padding: 20px;
-    }
-    
-    .corprofile-icon-box img {
-        max-width: 50px;
-        max-height: 50px;
-    }
-}
-</style>
+                .cp-numbered-list li {
+                    padding: 10px 0 10px 38px;
+                    position: relative;
+                    font-size: 0.95rem;
+                    color: var(--text-gray);
+                    line-height: 1.6;
+                    counter-increment: num;
+                }
 
- 
-<div class="corprofile-container">
-    <!-- Header Section -->
-    <div class="corprofile-header">
-        <h1>Corporate Profile</h1>
-        @if($corprofile->description)
-            <div class="corprofile-description">
-                {{ $corprofile->description }}
-            </div>
-        @endif
-    </div>
+                .cp-numbered-list li::before {
+                    content: counter(num);
+                    position: absolute;
+                    left: 0;
+                    top: 10px;
+                    width: 24px;
+                    height: 24px;
+                    background: var(--primary-teal);
+                    color: #fff;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    font-weight: 700;
+                }
 
-    <!-- Video Section -->
-    @if($corprofile->video)
-        <div class="corprofile-video-container">
-            <video width="100%" height="auto" controls>
-                <source src="{{ asset('storage/' . $corprofile->video) }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    @endif
+                .list-side-image {
+                    width: 180px;
+                    flex-shrink: 0;
+                }
 
-    <!-- Vision Section -->
-    @if($corprofile->vision_text || $corprofile->vision_image)
-        <div class="corprofile-section">
-            <div class="row align-items-center">
-                <div class="col-md-2 mb-4 mb-md-0">
-                    @if($corprofile->vision_image)
-                        <div class="corprofile-icon-box">
+                .list-side-image img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                /* ========================================
+                   BOARD OF DIRECTORS
+                   ======================================== */
+                .bod-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 40px;
+                }
+
+                .bod-card {
+                    text-align: center;
+                }
+
+                .bod-img-wrap {
+                    position: relative;
+                    width: 160px;
+                    height: 160px;
+                    margin: 0 auto 20px;
+                    cursor: pointer;
+                }
+
+                .bod-img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    filter: grayscale(100%);
+                    transition: all 0.3s ease;
+                }
+
+                .bod-img-wrap:hover .bod-img {
+                    filter: grayscale(0%);
+                    opacity: 0;
+                }
+
+                .bod-placeholder {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background: #ccc;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .bod-placeholder i {
+                    font-size: 3rem;
+                    color: #999;
+                }
+
+                .bod-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(145deg, #00bcd4, #009688);
+                    border-radius: 12px;
+                    padding: 15px;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s ease;
+                    overflow: hidden;
+                }
+
+                .bod-img-wrap:hover .bod-overlay {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                .bod-overlay-text {
+                    color: #fff;
+                    font-size: 0.65rem;
+                    line-height: 1.45;
+                    text-align: left;
+                    height: 100%;
+                    overflow-y: auto;
+                    margin: 0;
+                }
+
+                .bod-name {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: var(--text-dark);
+                    margin-bottom: 5px;
+                }
+
+                .bod-position {
+                    font-size: 0.85rem;
+                    color: var(--primary-teal);
+                    margin: 0;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+
+                /* ========================================
+                   TIMELINE
+                   ======================================== */
+                .tl-header {
+                    text-align: center;
+                    margin-bottom: 40px;
+                }
+
+                .tl-header h2 {
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    color: var(--text-dark);
+                    margin-bottom: 8px;
+                }
+
+                .tl-header p {
+                    color: #888;
+                    font-size: 0.9rem;
+                    margin: 0;
+                }
+
+                .year-block {
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+
+                .year-title {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: #00bcd4;
+                    cursor: pointer;
+                    display: inline-block;
+                    transition: transform 0.3s;
+                }
+
+                .year-title:hover {
+                    transform: scale(1.05);
+                }
+
+                .year-content {
+                    display: none;
+                    padding: 30px 0;
+                    position: relative;
+                }
+
+                .year-content.active {
+                    display: block;
+                }
+
+                .year-content::before {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    top: 0;
+                    bottom: 0;
+                    width: 3px;
+                    background: #c4e538;
+                }
+
+                .tl-item {
+                    display: flex;
+                    margin-bottom: 50px;
+                    position: relative;
+                }
+
+                .tl-item:last-child {
+                    margin-bottom: 0;
+                }
+
+                .tl-item::before {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    top: 15px;
+                    width: 14px;
+                    height: 14px;
+                    background: #c4e538;
+                    border-radius: 50%;
+                    z-index: 2;
+                }
+
+                .tl-left, .tl-right {
+                    width: 50%;
+                    padding: 0 40px;
+                }
+
+                .tl-left {
+                    text-align: right;
+                }
+
+                .tl-desc {
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    color: #333;
+                    line-height: 1.6;
+                    margin-bottom: 8px;
+                }
+
+                .tl-date {
+                    font-size: 0.8rem;
+                    color: #999;
+                }
+
+                .tl-img {
+                    width: 220px;
+                    height: 140px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 4px solid #fff;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                }
+
+                /* ========================================
+                   PARTNERS
+                   ======================================== */
+                .partners-grid {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 30px;
+                }
+
+                .partner-item img {
+                    max-width: 100px;
+                    max-height: 50px;
+                    object-fit: contain;
+                }
+
+                /* ========================================
+                   RESPONSIVE - TABLET
+                   ======================================== */
+                @media (max-width: 991px) {
+                    .cp-section {
+                        padding: 50px 0;
+                    }
+
+                    .vm-block {
+                        gap: 30px;
+                    }
+
+                    .vm-icon-box {
+                        width: 140px;
+                        height: 140px;
+                    }
+
+                    .vm-icon-box img {
+                        width: 70px;
+                        height: 70px;
+                    }
+
+                    .obj-wrapper {
+                        flex-direction: column;
+                    }
+
+                    .obj-image {
+                        width: 100%;
+                        max-width: 250px;
+                        margin: 30px auto 0;
+                    }
+
+                    .list-block {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+
+                    .list-icon-box {
+                        width: 120px;
+                        height: 120px;
+                    }
+
+                    .list-icon-box img {
+                        width: 60px;
+                        height: 60px;
+                    }
+
+                    .list-content {
+                        width: 100%;
+                    }
+
+                    .cp-list li,
+                    .cp-numbered-list li {
+                        text-align: left;
+                    }
+
+                    .list-side-image {
+                        width: 100%;
+                        max-width: 150px;
+                        margin-top: 25px;
+                    }
+
+                    .bod-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 30px;
+                    }
+
+                    .bod-img-wrap {
+                        width: 140px;
+                        height: 140px;
+                    }
+
+                    /* Timeline tablet */
+                    .year-content::before {
+                        left: 20px;
+                        transform: none;
+                    }
+
+                    .tl-item {
+                        flex-direction: column;
+                    }
+
+                    .tl-item::before {
+                        left: 20px;
+                        transform: none;
+                        top: 5px;
+                        width: 12px;
+                        height: 12px;
+                    }
+
+                    .tl-left, .tl-right {
+                        width: 100%;
+                        padding: 0 0 0 50px;
+                        text-align: left;
+                    }
+
+                    .tl-right {
+                        margin-top: 15px;
+                    }
+
+                    .tl-img {
+                        width: 100%;
+                        max-width: 280px;
+                        height: auto;
+                    }
+                }
+
+                /* ========================================
+                   RESPONSIVE - MOBILE
+                   ======================================== */
+                @media (max-width: 767px) {
+                    .cp-section {
+                        padding: 40px 0;
+                    }
+
+                    .cp-container {
+                        padding: 0 15px;
+                    }
+
+                    .cp-description {
+                        font-size: 0.9rem;
+                        line-height: 1.7;
+                    }
+
+                    .cp-section-title {
+                        font-size: 1.4rem;
+                        margin-bottom: 30px;
+                    }
+
+                    /* HIDE ICON BOXES ON MOBILE */
+                    .vm-icon-box,
+                    .list-icon-box {
+                        display: none;
+                    }
+
+                    .vm-block {
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 0;
+                        margin-bottom: 40px;
+                    }
+
+                    .vm-title {
+                        font-size: 1.3rem;
+                        margin-bottom: 12px;
+                    }
+
+                    .vm-text {
+                        font-size: 0.9rem;
+                    }
+
+                    .obj-card {
+                        padding: 18px 20px;
+                    }
+
+                    .obj-card-title {
+                        font-size: 0.95rem;
+                    }
+
+                    .obj-image {
+                        display: none;
+                    }
+
+                    .list-block {
+                        text-align: left;
+                    }
+
+                    .list-title {
+                        font-size: 1.2rem;
+                        text-align: center;
+                        margin-bottom: 15px;
+                    }
+
+                    .cp-list li,
+                    .cp-numbered-list li {
+                        font-size: 0.9rem;
+                        padding-left: 32px;
+                    }
+
+                    .list-side-image {
+                        display: none;
+                    }
+
+                    /* BOD - FULL WIDTH SINGLE COLUMN */
+                    .bod-grid {
+                        grid-template-columns: 1fr;
+                        gap: 20px;
+                        max-width: 350px;
+                        margin: 0 auto;
+                    }
+
+                    .bod-card {
+                        text-align: center;
+                    }
+
+                    .bod-img-wrap {
+                        width: 200px;
+                        height: 200px;
+                        margin-bottom: 15px;
+                    }
+
+                    .bod-overlay {
+                        display: none;
+                    }
+
+                    .bod-name {
+                        font-size: 1.1rem;
+                    }
+
+                    .bod-position {
+                        font-size: 0.8rem;
+                    }
+
+                    /* Timeline mobile */
+                    .tl-header h2 {
+                        font-size: 1.4rem;
+                    }
+
+                    .year-title {
+                        font-size: 1.3rem;
+                    }
+
+                    .year-content::before {
+                        left: 12px;
+                        width: 2px;
+                    }
+
+                    .tl-item::before {
+                        left: 12px;
+                        width: 10px;
+                        height: 10px;
+                    }
+
+                    .tl-left, .tl-right {
+                        padding-left: 35px;
+                    }
+
+                    .tl-desc {
+                        font-size: 0.85rem;
+                    }
+
+                    .tl-img {
+                        max-width: 160px;
+                        height: 100px;
+                    }
+
+                    .partner-item img {
+                        max-width: 70px;
+                        max-height: 35px;
+                    }
+                }
+
+                /* ========================================
+                   RESPONSIVE - SMALL MOBILE
+                   ======================================== */
+                @media (max-width: 480px) {
+                    .cp-section {
+                        padding: 30px 0;
+                    }
+
+                    .cp-container {
+                        padding: 0 12px;
+                    }
+
+                    .cp-section-title {
+                        font-size: 1.25rem;
+                    }
+
+                    .vm-title {
+                        font-size: 1.2rem;
+                    }
+
+                    .bod-img-wrap {
+                        width: 180px;
+                        height: 180px;
+                    }
+
+                    .tl-img {
+                        max-width: 130px;
+                        height: 80px;
+                    }
+
+                    .year-title {
+                        font-size: 1.15rem;
+                    }
+
+                    .partner-item img {
+                        max-width: 55px;
+                        max-height: 28px;
+                    }
+                }
+            </style>
+
+            <!-- DESCRIPTION -->
+            @if($corprofile->description)
+            <section class="cp-section cp-section--gray">
+                <div class="cp-container">
+                    <p class="cp-description">{{ $corprofile->description }}</p>
+                </div>
+            </section>
+            @endif
+
+            <!-- VISION & MISSION -->
+            <section id="our-company" class="cp-section cp-section--white">
+                <div class="cp-container">
+
+                    @if($corprofile->vision_text || $corprofile->vision_image)
+                    <div class="vm-block">
+                        @if($corprofile->vision_image)
+                        <div class="vm-icon-box">
                             <img src="{{ asset('storage/' . $corprofile->vision_image) }}" alt="Vision">
                         </div>
-                    @endif
-                </div>
-                <div class="col-md-10">
-                    <div class="corprofile-vm-box">
-                        <h3 class="corprofile-vm-title">Vision</h3>
-                        <p class="corprofile-vm-text">{{ $corprofile->vision_text }}</p>
+                        @endif
+                        <div class="vm-content">
+                            <h3 class="vm-title">Vision</h3>
+                            <p class="vm-text">{{ $corprofile->vision_text }}</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    @endif
+                    @endif
 
-    <!-- Mission Section -->
-    @if($corprofile->mission_text || $corprofile->mission_image)
-        <div class="corprofile-section">
-            <div class="row align-items-center">
-                <div class="col-md-2 mb-4 mb-md-0">
-                    @if($corprofile->mission_image)
-                        <div class="corprofile-icon-box">
+                    @if($corprofile->mission_text || $corprofile->mission_image)
+                    <div class="vm-block">
+                        @if($corprofile->mission_image)
+                        <div class="vm-icon-box">
                             <img src="{{ asset('storage/' . $corprofile->mission_image) }}" alt="Mission">
                         </div>
+                        @endif
+                        <div class="vm-content">
+                            <h3 class="vm-title">Mission</h3>
+                            <p class="vm-text">{{ $corprofile->mission_text }}</p>
+                        </div>
+                    </div>
                     @endif
-                </div>
-                <div class="col-md-10">
-                    <div class="corprofile-vm-box">
-                        <h3 class="corprofile-vm-title">Mission</h3>
-                        <p class="corprofile-vm-text">{{ $corprofile->mission_text }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
 
-    <!-- Objectives Section -->
-    @if($corprofile->objectives->count() > 0)
-        <div class="corprofile-objectives-section">
-            <div class="container">
-                <h2 class="corprofile-section-title">Objectives</h2>
-                
-                <div class="row">
-                    <div class="col-lg-8">
-                        @foreach($corprofile->objectives as $objective)
-                            <div class="corprofile-objective-card">
-                                <h4 class="corprofile-objective-title">{{ $objective->title }}</h4>
-                                <p class="corprofile-objective-desc">{{ $objective->description }}</p>
+                </div>
+            </section>
+
+            <!-- OBJECTIVES -->
+            @if($corprofile->objectives->count() > 0)
+            <section class="cp-section cp-section--gray">
+                <div class="cp-container">
+                    <h2 class="cp-section-title">Objectives</h2>
+
+                    <div class="obj-wrapper">
+                        <div class="obj-cards">
+                            @foreach($corprofile->objectives as $objective)
+                            <div class="obj-card">
+                                <h4 class="obj-card-title">{{ $objective->title }}:</h4>
+                                <p class="obj-card-desc">{{ $objective->description }}</p>
                             </div>
-                        @endforeach
-                    </div>
-                    @if($corprofile->objectives_image)
-                        <div class="col-lg-4">
-                            <div class="corprofile-objectives-image">
-                                <img src="{{ asset('storage/' . $corprofile->objectives_image) }}" alt="Objectives" class="img-fluid">
-                            </div>
+                            @endforeach
                         </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <!-- Strategies Section -->
-    @if($corprofile->strategies->count() > 0)
-        <div class="corprofile-section">
-            <h2 class="corprofile-section-title">Strategies</h2>
-            
-            <div class="row align-items-center">
-                @if($corprofile->strategies_image)
-                    <div class="col-md-2 mb-4 mb-md-0">
-                        <div class="corprofile-icon-box">
-                            <img src="{{ asset('storage/' . $corprofile->strategies_image) }}" alt="Strategies">
+                        @if($corprofile->objectives_image)
+                        <div class="obj-image">
+                            <img src="{{ asset('storage/' . $corprofile->objectives_image) }}" alt="Objectives">
                         </div>
-                    </div>
-                @endif
-                <div class="{{ $corprofile->strategies_image ? 'col-md-10' : 'col-md-12' }}">
-                    <ul class="corprofile-list">
-                        @foreach($corprofile->strategies as $strategy)
-                            <li class="corprofile-list-item">{{ $strategy->text }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <!-- Values Section -->
-    @if($corprofile->values->count() > 0)
-        <div class="corprofile-section">
-            <h2 class="corprofile-section-title">Values</h2>
-            
-            <div class="row align-items-center">
-                <div class="{{ $corprofile->values_image ? 'col-md-9' : 'col-md-12' }}">
-                    <ul class="corprofile-list">
-                        @foreach($corprofile->values as $value)
-                            <li class="corprofile-list-item">{{ $value->text }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @if($corprofile->values_image)
-                    <div class="col-md-3 mb-4 mb-md-0">
-                        <div class="corprofile-image-container">
-                            <img src="{{ asset('storage/' . $corprofile->values_image) }}" alt="Values">
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    @endif
-
-    <!-- Guiding Principles Section -->
-    @if($corprofile->principles->count() > 0)
-        <div class="corprofile-section">
-            <h2 class="corprofile-section-title">Guiding Principles</h2>
-            
-            <div class="row align-items-center">
-                @if($corprofile->principles_image)
-                    <div class="col-md-2 mb-4 mb-md-0">
-                        <div class="corprofile-icon-box">
-                            <img src="{{ asset('storage/' . $corprofile->principles_image) }}" alt="Guiding Principles">
-                        </div>
-                    </div>
-                @endif
-                <div class="{{ $corprofile->principles_image ? 'col-md-10' : 'col-md-12' }}">
-                    <ol class="corprofile-numbered-list">
-                        @foreach($corprofile->principles as $principle)
-                            <li class="corprofile-numbered-item">{{ $principle->text }}</li>
-                        @endforeach
-                    </ol>
-                </div>
-            </div>
-        </div>
-    @endif
-
-</div>
-</section>
-
-<!-- Board of Directors Section -->
-<section id="board-of-directors" class="content-section py-5">
-
-<style>
-    /* Board of Directors Custom Styles */
-:root {
-    --bod-primary: #00D4C8;
-    --bod-text: #333333;
-    --bod-text-light: #666666;
-}
-
-.bod-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 80px 20px;
-    background-color: #FFFFFF;
-}
-
-.bod-header {
-    text-align: center;
-    margin-bottom: 80px;
-}
-
-.bod-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--bod-text);
-    margin-bottom: 0;
-}
-
-/* Directors Grid - Single Column Centered */
-.bod-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 60px;
-}
-
-/* Director Card */
-.bod-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-}
-
-/* Red Dot Above Image */
-.bod-card::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background-color: #FF4444;
-    border-radius: 50%;
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* Image Container with Hover Effect */
-.bod-image-wrapper {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 25px;
-    cursor: pointer;
-}
-
-.bod-image-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s ease;
-}
-
-.bod-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
-    transition: all 0.4s ease;
-}
-
-.bod-image-container:hover .bod-image {
-    filter: grayscale(0%);
-    transform: scale(1.1);
-}
-
-/* Description Overlay */
-.bod-description-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 212, 200, 0.95);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s ease;
-    z-index: 2;
-}
-
-.bod-image-wrapper:hover .bod-description-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-.bod-description-text {
-    color: white;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    text-align: center;
-    max-height: 100%;
-    overflow-y: auto;
-}
-
-/* Director Info */
-.bod-director-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--bod-text);
-    margin-bottom: 5px;
-}
-
-.bod-director-title {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--bod-text-light);
-}
-
-/* Empty State */
-.bod-empty {
-    text-align: center;
-    padding: 80px 20px;
-}
-
-.bod-empty-text {
-    font-size: 1.1rem;
-    color: var(--bod-text-light);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .bod-container {
-        padding: 60px 15px;
-    }
-    
-    .bod-title {
-        font-size: 1.75rem;
-    }
-    
-    .bod-grid {
-        gap: 50px;
-    }
-    
-    .bod-image-wrapper {
-        width: 180px;
-        height: 180px;
-    }
-}
-</style>
- 
-<div class="bod-container">
-    <!-- Header -->
-    <div class="bod-header">
-        <h1 class="bod-title">Board of Directors</h1>
-    </div>
-
-    <!-- Directors Grid -->
-    @if($directors->count() > 0)
-        <div class="bod-grid">
-            @foreach($directors as $director)
-                <div class="bod-card">
-                    <div class="bod-image-wrapper">
-                        <div class="bod-image-container">
-                            @if($director->image)
-                                <img src="{{ asset('storage/' . $director->image) }}" 
-                                     alt="{{ $director->name }}" 
-                                     class="bod-image">
-                            @else
-                                <div style="width: 100%; height: 100%; background: #ddd;"></div>
-                            @endif
-                            
-                            @if($director->description)
-                                <div class="bod-description-overlay">
-                                    <p class="bod-description-text">{{ $director->description }}</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                    
-                    <div class="bod-director-info">
-                        <h3 class="bod-director-name">{{ $director->name }}</h3>
-                        <p class="bod-director-title">{{ $director->title }}</p>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @else
-        <div class="bod-empty">
-            <p class="bod-empty-text">No board members found</p>
-        </div>
-    @endif
-
-</div> 
-
-</section>
-
-<!-- Timeline Section -->
-<section id="timeline" class="content-section py-5">
-   
-<style>
-    .ourtimeline-container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 80px 20px;
-        background-color: #E8E8E8;
-    }
-
-    .ourtimeline-header {
-        text-align: center;
-        margin-bottom: 60px;
-    }
-
-    .ourtimeline-header h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 8px;
-    }
-
-    .ourtimeline-header p {
-        color: #888;
-        font-size: 0.9rem;
-    }
-
-    /* Years list - centered */
-    .timeline-years-list {
-        text-align: center;
-        margin-bottom: 60px;
-    }
-
-    .year-title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #00bcd4;
-        margin-bottom: 15px;
-        cursor: pointer;
-        transition: all 0.3s;
-        user-select: none;
-        display: block;
-    }
-
-    .year-title:hover {
-        color: #0097a7;
-    }
-
-    .year-title.active {
-        color: #cddc39;
-    }
-
-    /* Timeline container */
-    .timeline-content-wrapper {
-        position: relative;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    /* Center vertical line */
-    .timeline-content-wrapper::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: #cddc39;
-    }
-
-    .year-items {
-        display: none;
-        position: relative;
-    }
-
-    .year-items.active {
-        display: block;
-    }
-
-    .timeline-item {
-        position: relative;
-        margin-bottom: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 40px;
-    }
-
-    /* Timeline center dot */
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 50%;
-        margin-top: -8px;
-        width: 14px;
-        height: 14px;
-        background-color: #cddc39;
-        border: 4px solid #fff;
-        border-radius: 50%;
-        box-shadow: 0 0 0 3px #cddc39;
-        z-index: 10;
-    }
-
-    /* Alternating layout */
-    .timeline-item:nth-child(odd) {
-        justify-content: flex-end;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-description-wrapper {
-        order: 1;
-        text-align: right;
-        padding-right: 25px;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-image {
-        order: 2;
-        margin-left: calc(50% + 25px);
-    }
-
-    .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-    }
-
-    .timeline-item:nth-child(even) .timeline-image {
-        order: 1;
-        margin-right: calc(50% + 25px);
-    }
-
-    .timeline-item:nth-child(even) .timeline-description-wrapper {
-        order: 2;
-        text-align: left;
-        padding-left: 25px;
-    }
-
-    .timeline-description-wrapper {
-        flex: 0 0 350px;
-        max-width: 350px;
-    }
-
-    .timeline-description {
-        background: white;
-        padding: 20px 24px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        font-size: 0.85rem;
-        line-height: 1.6;
-        color: #2c2c2c;
-        margin-bottom: 10px;
-    }
-
-    .timeline-date {
-        color: #999;
-        font-size: 0.8rem;
-        padding: 0 5px;
-    }
-
-    .timeline-image {
-        flex: 0 0 280px;
-        max-width: 280px;
-    }
-
-    .timeline-image img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-
-    @media (max-width: 992px) {
-        .timeline-content-wrapper::before {
-            left: 30px;
-            transform: none;
-        }
-
-        .timeline-item {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            padding-left: 70px;
-            gap: 20px;
-        }
-
-        .timeline-item::before {
-            left: 30px;
-            transform: none;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-description-wrapper,
-        .timeline-item:nth-child(even) .timeline-description-wrapper {
-            order: 1 !important;
-            text-align: left !important;
-            padding: 0 !important;
-            max-width: 100%;
-            flex: 1;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-image,
-        .timeline-item:nth-child(even) .timeline-image {
-            order: 2 !important;
-            margin: 0 !important;
-            max-width: 100%;
-            flex: 1;
-        }
-    }
-</style> 
-
-<div class="ourtimeline-container">
-    <div class="ourtimeline-header">
-        <h1>Our Timeline</h1>
-        <p>Click on a year to expand</p>
-    </div>
-
-    <!-- Years list centered -->
-    <div class="timeline-years-list">
-        @foreach($groupedByYear as $year => $items)
-            <h2 class="year-title {{ $loop->first ? 'active' : '' }}" data-year="{{ $year }}">
-                {{ $year }}
-            </h2>
-        @endforeach
-    </div>
-
-    <!-- Timeline items -->
-    <div class="timeline-content-wrapper">
-        @foreach($groupedByYear as $year => $items)
-            <div class="year-items {{ $loop->first ? 'active' : '' }}" id="year-{{ $year }}">
-                @foreach($items as $item)
-                    <div class="timeline-item">
-                        <div class="timeline-description-wrapper">
-                            <div class="timeline-description">
-                                {{ $item->description }}
-                            </div>
-                            <div class="timeline-date">
-                                {{ $item->date->format('jS F Y') }}
-                            </div>
-                        </div>
-
-                        @if($item->image)
-                            <div class="timeline-image">
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="Timeline event">
-                            </div>
                         @endif
                     </div>
-                @endforeach
-            </div>
-        @endforeach
-    </div>
-</div>
+                </div>
+            </section>
+            @endif
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const yearTitles = document.querySelectorAll('.year-title');
-        
-        yearTitles.forEach(function(yearTitle) {
-            yearTitle.addEventListener('click', function() {
-                const year = this.getAttribute('data-year');
-                
-                // Hide all year items
-                document.querySelectorAll('.year-items').forEach(function(item) {
-                    item.classList.remove('active');
-                });
-                
-                // Remove active class from all year titles
-                yearTitles.forEach(function(title) {
-                    title.classList.remove('active');
-                });
-                
-                // Show selected year items
-                const selectedYear = document.getElementById('year-' + year);
-                if (selectedYear) {
-                    selectedYear.classList.add('active');
-                }
-                
-                // Add active class to clicked year
-                this.classList.add('active');
-            });
-        });
-    });
-</script> 
-</section>
-
-<!-- Our Partners Section -->
-<section id="our-partners" class="content-section py-5">
-
-<style>
-    .ourpartners-section {
-        padding: 80px 20px;
-        max-width: 1100px;
-        margin: 0 auto;
-        background-color: #ffffff;
-    }
-
-    .ourpartners-header {
-        text-align: center;
-        margin-bottom: 60px;
-    }
-
-    .ourpartners-header h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 0;
-    }
-
-    .partners-grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 40px;
-        row-gap: 30px;
-    }
-
-    .partner-item {
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease;
-    }
-
-    .partner-item:hover {
-        transform: scale(1.05);
-    }
-
-    .partner-logo {
-        max-width: 120px;
-        max-height: 60px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        filter: grayscale(0%);
-    }
-
-    @media (max-width: 768px) {
-        .partners-grid {
-            gap: 30px;
-            row-gap: 25px;
-        }
-
-        .partner-logo {
-            max-width: 90px;
-            max-height: 50px;
-        }
-
-        .ourpartners-header h1 {
-            font-size: 1.75rem;
-        }
-
-        .ourpartners-section {
-            padding: 60px 15px;
-        }
-    }
-</style> 
-
-<div class="ourpartners-section">
-    <div class="ourpartners-header">
-        <h1>Our Partners</h1> 
-    </div>
-
-    <div class="partners-grid">
-        @foreach($partners as $partner)
-            <div class="partner-item">
-                <img src="{{ $partner->image_url }}" 
-                     alt="{{ $partner->name }}" 
-                     class="partner-logo"
-                     title="{{ $partner->name }}">
-            </div>
-        @endforeach
-    </div>
-</div>
-</section>
-
-                        
-                            </div>                   
+            <!-- STRATEGIES -->
+            @if($corprofile->strategies->count() > 0)
+            <section class="cp-section cp-section--white">
+                <div class="cp-container">
+                    <div class="list-block">
+                        @if($corprofile->strategies_image)
+                        <div class="list-icon-box">
+                            <img src="{{ asset('storage/' . $corprofile->strategies_image) }}" alt="Strategies">
+                        </div>
+                        @endif
+                        <div class="list-content">
+                            <h3 class="list-title">Strategies</h3>
+                            <ul class="cp-list">
+                                @foreach($corprofile->strategies as $strategy)
+                                <li>{{ $strategy->text }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
-                 </div>
+                </div>
+            </section>
+            @endif
+
+            <!-- VALUES -->
+            @if($corprofile->values->count() > 0)
+            <section class="cp-section cp-section--gray">
+                <div class="cp-container">
+                    <div class="list-block">
+                        <div class="list-content">
+                            <h3 class="list-title">Values</h3>
+                            <ul class="cp-list">
+                                @foreach($corprofile->values as $value)
+                                <li>{{ $value->text }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @if($corprofile->values_image)
+                        <div class="list-side-image">
+                            <img src="{{ asset('storage/' . $corprofile->values_image) }}" alt="Values">
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </section>
+            @endif
+
+            <!-- GUIDING PRINCIPLES -->
+            @if($corprofile->principles->count() > 0)
+            <section class="cp-section cp-section--white">
+                <div class="cp-container">
+                    <div class="list-block">
+                        @if($corprofile->principles_image)
+                        <div class="list-icon-box">
+                            <img src="{{ asset('storage/' . $corprofile->principles_image) }}" alt="Principles">
+                        </div>
+                        @endif
+                        <div class="list-content">
+                            <h3 class="list-title">Guiding Principles</h3>
+                            <ol class="cp-numbered-list">
+                                @foreach($corprofile->principles as $principle)
+                                <li>{{ $principle->text }}</li>
+                                @endforeach
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            @endif
+
+            <!-- BOARD OF DIRECTORS -->
+            <section id="board-of-directors" class="cp-section cp-section--white">
+                <div class="cp-container">
+                    <h2 class="cp-section-title">Board of Directors</h2>
+
+                    @if($directors->count() > 0)
+                    <div class="bod-grid">
+                        @foreach($directors as $director)
+                        <div class="bod-card">
+                            <div class="bod-img-wrap">
+                                @if($director->image)
+                                <img src="{{ asset('storage/' . $director->image) }}" alt="{{ $director->name }}" class="bod-img">
+                                @else
+                                <div class="bod-placeholder">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                @endif
+
+                                @if($director->description)
+                                <div class="bod-overlay">
+                                    <p class="bod-overlay-text">{{ $director->description }}</p>
+                                </div>
+                                @endif
+                            </div>
+                            <h3 class="bod-name">{{ $director->name }}</h3>
+                            <p class="bod-position">{{ $director->title }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <p style="text-align: center; color: #888;">No board members found</p>
+                    @endif
+                </div>
+            </section>
+
+            <!-- TIMELINE -->
+            <section id="timeline" class="cp-section cp-section--gray">
+                <div class="cp-container">
+                    <div class="tl-header">
+                        <h2>Our Timeline</h2>
+                        <p>Click on a year to expand</p>
+                    </div>
+
+                    @foreach($groupedByYear as $year => $items)
+                    <div class="year-block">
+                        <h3 class="year-title" data-year="{{ $year }}">{{ $year }}</h3>
+
+                        <div class="year-content {{ $loop->first ? 'active' : '' }}" id="year-{{ $year }}">
+                            @foreach($items as $item)
+                            <div class="tl-item">
+                                @if($loop->odd)
+                                <div class="tl-left">
+                                    <p class="tl-desc">{{ $item->description }}</p>
+                                    <span class="tl-date"><i class="fa-regular fa-calendar me-1"></i>{{ $item->date->format('jS F Y') }}</span>
+                                </div>
+                                <div class="tl-right">
+                                    @if($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="Timeline" class="tl-img">
+                                    @endif
+                                </div>
+                                @else
+                                <div class="tl-left">
+                                    @if($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="Timeline" class="tl-img" style="float: right;">
+                                    @endif
+                                </div>
+                                <div class="tl-right">
+                                    <p class="tl-desc">{{ $item->description }}</p>
+                                    <span class="tl-date"><i class="fa-regular fa-calendar me-1"></i>{{ $item->date->format('jS F Y') }}</span>
+                                </div>
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </section>
+
+            <!-- PARTNERS -->
+            <section id="our-partners" class="cp-section cp-section--white">
+                <div class="cp-container">
+                    <h2 class="cp-section-title">Our Partners</h2>
+
+                    <div class="partners-grid">
+                        @foreach($partners as $partner)
+                        <div class="partner-item">
+                            <img src="{{ $partner->image_url }}" alt="{{ $partner->name }}" title="{{ $partner->name }}">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const yearTitles = document.querySelectorAll('.year-title');
+
+                yearTitles.forEach(function(title) {
+                    title.addEventListener('click', function() {
+                        const year = this.getAttribute('data-year');
+                        const content = document.getElementById('year-' + year);
+
+                        // Close all
+                        document.querySelectorAll('.year-content').forEach(function(c) {
+                            c.classList.remove('active');
+                        });
+
+                        // Open clicked
+                        if (content) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+
+                // Hash scroll
+                if (window.location.hash) {
+                    const el = document.querySelector(window.location.hash);
+                    if (el) {
+                        setTimeout(function() {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                    }
+                }
+            });
+            </script>
+
         </div>
-    </main>
-
-<style>
-.content-section {
-    scroll-margin-top: 100px;  
-    border-bottom: 1px solid #e9ecef;
-}
-
-.content-section:last-child {
-    border-bottom: none;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll to section if hash exists in URL
-    if (window.location.hash) {
-        setTimeout(function() {
-            const element = document.querySelector(window.location.hash);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }, 100);
-    }
-});
-</script>
+    </div>
+</main>
 @endsection

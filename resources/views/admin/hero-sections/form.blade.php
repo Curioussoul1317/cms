@@ -1,174 +1,277 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-lg-8">
+        {{-- Hero Details --}}
         <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ti ti-layout-navbar me-2 text-primary"></i>
+                    Hero Details
+                </h3>
+            </div>
             <div class="card-body">
-                <div class="mb-3">
-                    <label for="route_name" class="form-label">Route / Page <span class="text-danger">*</span></label>
-                    <select name="route_name" id="route_name" class="form-select @error('route_name') is-invalid @enderror" required>
-                        <option value="">Select Route</option>
-                        @foreach($availableRoutes as $routeKey => $routeName)
-                            @php
-                                [$route, $section] = strpos($routeKey, ':') !== false 
-                                    ? explode(':', $routeKey, 2) 
-                                    : [$routeKey, null];
-                            @endphp
-                            <option value="{{ $route }}" 
-                                    data-section="{{ $section }}"
-                                    {{ old('route_name', $heroSection->route_name ?? '') == $route && old('section', $heroSection->section ?? '') == $section ? 'selected' : '' }}>
-                                {{ $routeName }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('route_name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                    <small class="form-text text-muted">Select the page where this hero section will appear</small>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label required">Route / Page</label>
+                        <select name="route_name" id="route_name" class="form-select @error('route_name') is-invalid @enderror" required>
+                            <option value="">Select page...</option>
+                            @foreach($availableRoutes as $routeKey => $routeName)
+                                @php
+                                    [$route, $section] = strpos($routeKey, ':') !== false 
+                                        ? explode(':', $routeKey, 2) 
+                                        : [$routeKey, null];
+                                @endphp
+                                <option value="{{ $route }}" 
+                                        data-section="{{ $section }}"
+                                        {{ old('route_name', $heroSection->route_name ?? '') == $route && old('section', $heroSection->section ?? '') == $section ? 'selected' : '' }}>
+                                    {{ $routeName }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="section" id="section" value="{{ old('section', $heroSection->section ?? '') }}">
+                        <small class="form-hint">Select the page where this hero section will appear</small>
+                        @error('route_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label required">Title</label>
+                        <input type="text" 
+                               name="title" 
+                               id="title" 
+                               class="form-control @error('title') is-invalid @enderror" 
+                               placeholder="Enter hero title..."
+                               value="{{ old('title', $heroSection->title ?? '') }}" 
+                               required>
+                        @error('title')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Subtitle</label>
+                        <textarea name="subtitle" 
+                                  id="subtitle" 
+                                  rows="3" 
+                                  class="form-control @error('subtitle') is-invalid @enderror"
+                                  placeholder="Enter hero subtitle...">{{ old('subtitle', $heroSection->subtitle ?? '') }}</textarea>
+                        @error('subtitle')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <input type="hidden" name="section" id="section" value="{{ old('section', $heroSection->section ?? '') }}">
-
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
-                    <input type="text" 
-                           name="title" 
-                           id="title" 
-                           class="form-control @error('title') is-invalid @enderror" 
-                           value="{{ old('title', $heroSection->title ?? '') }}" 
-                           required>
-                    @error('title')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="subtitle" class="form-label">Subtitle</label>
-                    <textarea name="subtitle" 
-                              id="subtitle" 
-                              rows="3" 
-                              class="form-control @error('subtitle') is-invalid @enderror">{{ old('subtitle', $heroSection->subtitle ?? '') }}</textarea>
-                    @error('subtitle')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="row">
+        {{-- Button Settings --}}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ti ti-click me-2 text-primary"></i>
+                    Button Settings
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="button_text" class="form-label">Button Text</label>
-                            <input type="text" 
-                                   name="button_text" 
-                                   id="button_text" 
-                                   class="form-control @error('button_text') is-invalid @enderror" 
-                                   value="{{ old('button_text', $heroSection->button_text ?? '') }}">
-                            @error('button_text')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <label class="form-label">Button Text</label>
+                        <input type="text" 
+                               name="button_text" 
+                               id="button_text" 
+                               class="form-control @error('button_text') is-invalid @enderror" 
+                               placeholder="e.g., Learn More"
+                               value="{{ old('button_text', $heroSection->button_text ?? '') }}">
+                        <small class="form-hint">Leave empty to hide button</small>
+                        @error('button_text')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="button_link" class="form-label">Button Link</label>
+                        <label class="form-label">Button Link</label>
+                        <div class="input-icon">
+                            <span class="input-icon-addon">
+                                <i class="ti ti-link"></i>
+                            </span>
                             <input type="url" 
                                    name="button_link" 
                                    id="button_link" 
                                    class="form-control @error('button_link') is-invalid @enderror" 
-                                   value="{{ old('button_link', $heroSection->button_link ?? '') }}" 
-                                   placeholder="https://example.com">
-                            @error('button_link')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                   placeholder="https://example.com"
+                                   value="{{ old('button_link', $heroSection->button_link ?? '') }}">
                         </div>
+                        @error('button_link')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="mb-3">
-                    <label for="background_color" class="form-label">Background Color <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <input type="color" 
-                               name="background_color" 
-                               id="background_color" 
-                               class="form-control form-control-color @error('background_color') is-invalid @enderror" 
-                               value="{{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}" 
-                               required>
-                        <input type="text" 
-                               id="background_color_text" 
-                               class="form-control" 
-                               value="{{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}" 
-                               readonly>
-                    </div>
-                    @error('background_color')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="image" class="form-label">Hero Image</label>
-                    <input type="file" 
-                           name="image" 
-                           id="image" 
-                           class="form-control @error('image') is-invalid @enderror" 
-                           accept="image/*">
-                    @error('image')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                    <small class="form-text text-muted">Recommended size: 800x600px. Max 2MB.</small>
-                </div>
-
-                @if(isset($heroSection) && $heroSection->image)
-                    <div class="mb-3">
-                        <label class="form-label">Current Image</label>
-                        <div>
-                            <img src="{{ asset('storage/' . $heroSection->image) }}" 
-                                 alt="Current Hero Image" 
-                                 class="img-thumbnail" 
-                                 style="max-width: 300px;">
+        {{-- Appearance --}}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ti ti-palette me-2 text-primary"></i>
+                    Appearance
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label required">Background Color</label>
+                        <div class="input-group">
+                            <input type="color" 
+                                   name="background_color" 
+                                   id="background_color" 
+                                   class="form-control form-control-color @error('background_color') is-invalid @enderror" 
+                                   value="{{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}" 
+                                   style="width: 50px;"
+                                   required>
+                            <input type="text" 
+                                   id="background_color_text" 
+                                   class="form-control bg-light" 
+                                   value="{{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}" 
+                                   readonly>
                         </div>
+                        @error('background_color')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                @endif
 
-                <div class="mb-3">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" 
-                               type="checkbox" 
-                               name="is_active" 
-                               id="is_active" 
-                               value="1"
-                               {{ old('is_active', $heroSection->is_active ?? true) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="is_active">
-                            Active
-                        </label>
+                    <div class="col-md-6">
+                        <label class="form-label">Hero Image</label>
+                        <input type="file" 
+                               name="image" 
+                               id="image" 
+                               class="form-control @error('image') is-invalid @enderror" 
+                               accept="image/*"
+                               onchange="previewHeroImage(this)">
+                        <small class="form-hint">Recommended: 800x600px, max 2MB</small>
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <small class="form-text text-muted">Only active hero sections will be displayed on the website</small>
+
+                    @if(isset($heroSection) && $heroSection->image)
+                        <div class="col-12">
+                            <label class="form-label">Current Image</label>
+                            <div class="p-3 bg-light rounded">
+                                <img src="{{ asset('storage/' . $heroSection->image) }}" 
+                                     alt="Current Hero Image" 
+                                     id="current-hero-image"
+                                     class="rounded" 
+                                     style="max-width: 300px; max-height: 200px; object-fit: cover;">
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card">
+    <div class="col-lg-4">
+        {{-- Live Preview --}}
+        <div class="card mb-3" style="position: sticky; top: 1rem; z-index: 100;">
             <div class="card-header">
-                <h5 class="card-title mb-0">Preview</h5>
+                <h3 class="card-title">
+                    <i class="ti ti-eye me-2 text-primary"></i>
+                    Live Preview
+                </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div id="hero-preview" 
-                     style="background-color: {{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}; padding: 20px; border-radius: 8px; color: white; min-height: 200px;">
-                    <h6 id="preview-title" class="fw-bold mb-2">{{ old('title', $heroSection->title ?? 'Your Title Here') }}</h6>
-                    <p id="preview-subtitle" class="mb-2 small">{{ old('subtitle', $heroSection->subtitle ?? 'Your subtitle will appear here') }}</p>
-                    <button id="preview-button" class="btn btn-warning btn-sm" style="display: {{ old('button_text', $heroSection->button_text ?? '') ? 'inline-block' : 'none' }}">
-                        {{ old('button_text', $heroSection->button_text ?? 'Button') }}
-                    </button>
+                     style="background-color: {{ old('background_color', $heroSection->background_color ?? '#4DD0E1') }}; padding: 24px; color: white; min-height: 180px; position: relative; overflow: hidden;">
+                    @if(isset($heroSection) && $heroSection->image)
+                        <div style="position: absolute; top: 0; right: 0; width: 40%; height: 100%; background-image: url('{{ asset('storage/' . $heroSection->image) }}'); background-size: cover; background-position: center; opacity: 0.3;"></div>
+                    @endif
+                    <div style="position: relative; z-index: 1;">
+                        <h4 id="preview-title" class="fw-bold mb-2">{{ old('title', $heroSection->title ?? ' Title Here') }}</h4>
+                        <p id="preview-subtitle" class="mb-3 small opacity-90">{{ old('subtitle', $heroSection->subtitle ?? ' subtitle will appear here') }}</p>
+                        <button id="preview-button" class="btn btn-warning btn-sm" style="display: {{ old('button_text', $heroSection->button_text ?? '') ? 'inline-block' : 'none' }}">
+                            {{ old('button_text', $heroSection->button_text ?? 'Button') }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="card mt-3">
+        {{-- Settings --}}
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ti ti-settings me-2 text-primary"></i>
+                    Settings
+                </h3>
+            </div>
             <div class="card-body">
-                <button type="submit" class="btn btn-primary w-100 mb-2">
-                    <i class="ti ti-device-floppy"></i> Save Hero Section
-                </button>
-                <a href="{{ route('admin.hero-sections.index') }}" class="btn btn-secondary w-100">
-                    <i class="ti ti-x"></i> Cancel
-                </a>
+                <label class="form-check form-switch">
+                    <input class="form-check-input" 
+                           type="checkbox" 
+                           name="is_active" 
+                           id="is_active" 
+                           value="1"
+                           {{ old('is_active', $heroSection->is_active ?? true) ? 'checked' : '' }}>
+                    <span class="form-check-label">Active</span>
+                </label>
+                <small class="form-hint d-block mt-2">
+                    Only active hero sections will be displayed on the website.
+                </small>
+            </div>
+        </div>
+
+        {{-- Information (Edit only) --}}
+        @if(isset($heroSection))
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ti ti-info-circle me-2 text-primary"></i>
+                        Information
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="datagrid">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Created</div>
+                            <div class="datagrid-content">{{ $heroSection->created_at->format('d M Y, h:i A') }}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Last Updated</div>
+                            <div class="datagrid-content">{{ $heroSection->updated_at->format('d M Y, h:i A') }}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Approval Status</div>
+                            <div class="datagrid-content">
+                                <span class="status status-{{ $heroSection->is_approved ? 'green' : 'yellow' }}">
+                                    {{ $heroSection->is_approved ? 'Approved' : 'Pending' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Publication Status</div>
+                            <div class="datagrid-content">
+                                <span class="status status-{{ $heroSection->is_published ? 'blue' : 'secondary' }}">
+                                    {{ $heroSection->is_published ? 'Published' : 'Draft' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        {{-- Actions --}}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-column gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ti ti-device-floppy me-1"></i>
+                        {{ isset($heroSection) ? 'Update Hero Section' : 'Create Hero Section' }}
+                    </button>
+                    <a href="{{ route('admin.hero-sections.index') }}" class="btn btn-outline-secondary">
+                        <i class="ti ti-x me-1"></i>
+                        Cancel
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -200,11 +303,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroPreview = document.getElementById('hero-preview');
 
     titleInput?.addEventListener('input', function() {
-        previewTitle.textContent = this.value || 'Your Title Here';
+        previewTitle.textContent = this.value || ' Title Here';
     });
 
     subtitleInput?.addEventListener('input', function() {
-        previewSubtitle.textContent = this.value || 'Your subtitle will appear here';
+        previewSubtitle.textContent = this.value || ' subtitle will appear here';
     });
 
     buttonTextInput?.addEventListener('input', function() {
@@ -217,5 +320,18 @@ document.addEventListener('DOMContentLoaded', function() {
         backgroundColorText.value = this.value;
     });
 });
+
+function previewHeroImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const currentImage = document.getElementById('current-hero-image');
+            if (currentImage) {
+                currentImage.src = e.target.result;
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 </script>
 @endpush

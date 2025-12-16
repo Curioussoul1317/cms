@@ -20,11 +20,7 @@ return new class extends Migration
             $table->json('opening_hours')->nullable()->comment('JSON array of opening hours');
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
-            $table->text('address')->nullable();
-            $table->string('image')->nullable();
-            $table->text('description')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+            $table->text('address')->nullable();  
             $table->integer('sort_order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();

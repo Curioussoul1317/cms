@@ -19,11 +19,7 @@ class Place extends Model
         'opening_hours',
         'phone_number',
         'email',
-        'address',
-        'image',
-        'description',
-        'latitude',
-        'longitude',
+        'address', 
         'sort_order',
         'is_active',
         'created_by',
@@ -38,9 +34,7 @@ class Place extends Model
 
     protected $casts = [
         'opening_hours' => 'array', 
-        'sort_order' => 'integer',
-        'latitude' => 'decimal:8',
-        'longitude' => 'decimal:8',
+        'sort_order' => 'integer', 
         'is_active' => 'boolean',
         'is_approved' => 'boolean',
         'is_published' => 'boolean',

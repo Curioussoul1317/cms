@@ -1,5 +1,4 @@
-{{-- resources/views/components/templates/steps.blade.php --}}
-
+ 
 <div class="steps-modern-section">
     <div class="container">
         {{-- Section Header --}}

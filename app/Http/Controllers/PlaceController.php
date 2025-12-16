@@ -53,11 +53,7 @@ class PlaceController extends Controller
             'opening_hours.*.closed' => 'nullable|boolean',
             'phone_number' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
-            'address' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
+            'address' => 'nullable|string',             
             'sort_order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
@@ -65,12 +61,7 @@ class PlaceController extends Controller
         $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
         $validated['is_active'] = $request->boolean('is_active');
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('places', 'public');
-        }
-
-        // Process opening hours from form
+         
         if ($request->has('hours')) {
             $validated['opening_hours'] = $this->processOpeningHours($request->input('hours'));
         }
@@ -113,27 +104,13 @@ class PlaceController extends Controller
             'opening_hours' => 'nullable|array',
             'phone_number' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
-            'address' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string',
-            'latitude' => 'nullable|numeric|between:-90,90',
-            'longitude' => 'nullable|numeric|between:-180,180',
+            'address' => 'nullable|string',            
             'sort_order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active');
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($place->image) {
-                Storage::disk('public')->delete($place->image);
-            }
-            $validated['image'] = $request->file('image')->store('places', 'public');
-        }
-
-        // Process opening hours from form
+ 
         if ($request->has('hours')) {
             $validated['opening_hours'] = $this->processOpeningHours($request->input('hours'));
         }
@@ -148,12 +125,7 @@ class PlaceController extends Controller
      * Remove the specified place
      */
     public function destroy(Place $place)
-    {
-        // Delete image if exists
-        if ($place->image) {
-            Storage::disk('public')->delete($place->image);
-        }
-
+    { 
         $place->delete();
 
         return redirect()->route('admin.places.index')

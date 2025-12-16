@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', config('app.name'))</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -1013,6 +1015,20 @@ body.mobile-nav-open {
                             </a>
                             @endforeach
                         </div>
+                        @else
+                        <div class="subcategory-links">
+                            @foreach($page['children'] as $child)                            
+                            <a href="{{ route($child['route']) }}{{ isset($child['section']) ? '#' . $child['section'] : '' }}" class="subcategory-link">
+                            <div class="category-icon">
+                            <i class="ti ti-circle-filled"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>{{ $child['name'] }}</h3>
+                            </div>
+                                
+                            </a>
+                            @endforeach
+                        </div>
                     @endif
                 </div>
             @endforeach
@@ -1184,7 +1200,7 @@ body.mobile-nav-open {
                             @foreach($page['children'] as $child)
                             <a href="{{ route($child['route']) }}{{ isset($child['section']) ? '#' . $child['section'] : '' }}" class="mobile-subcategory-link">
                                 {{ $child['name'] }}
-                            </a>
+                            </a> 
                             @endforeach
                         </div>
                     </div>
@@ -1247,7 +1263,43 @@ body.mobile-nav-open {
                                     <a href="#" class="social-icon"><i class="ti ti-brand-twitter"></i></a>
                                 </div>
                             </div>
-                   
+
+                            {{-- STATIC NAVIGATION CATEGORIES --}}
+                            @foreach($staticNav as $staticCategory)
+                                <div class="col-lg-2 col-md-6">
+                                    <h6 class="footer-heading">{{ strtoupper($staticCategory['name'] ?? $staticCategory['identifier']) }}</h6>
+                                    <ul class="footer-links">
+                                        @foreach($staticCategory['pages'] as $page)
+                                            @if($page['has_children'] && count($page['children']) > 0)
+                                                {{-- Parent page with children - show as section label --}}
+                                                <li class="footer-section-label" style="color: rgb(29, 200, 226); margin-top: {{ $loop->first ? '0' : '1rem' }};">
+                                                    {{ $page['name'] }}
+                                                </li>
+                                                
+                                                {{-- Show child pages --}}
+                                                @foreach($page['children'] as $child)
+                                                    <li>
+                                                        <a href="{{ route($child['route']) }}{{ isset($child['section']) ? '#' . $child['section'] : '' }}">
+                                                            {{ $child['name'] }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            @else
+                                                {{-- Single page without children --}}
+                                                @if(isset($page['route']))
+                                                    <li>
+                                                        <a href="{{ route($page['route']) }}{{ isset($page['section']) ? '#' . $page['section'] : '' }}">
+                                                            {{ $page['name'] }}
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
+
+                            {{-- DYNAMIC MAIN CATEGORIES --}}
                             @foreach($mainCategories->where('is_published', 1) as $mainCategory)
                                 <div class="col-lg-2 col-md-6">
                                     <h6 class="footer-heading">{{ strtoupper($mainCategory->name) }}</h6>

@@ -100,6 +100,7 @@ class PageViewController extends Controller
      */
     public function media(Request $request)
     {
+        $heroData = HeroSectionController::getHeroData('corprofile.Media');
         $categories = MediaCategory::active()->ordered()->get();
          
         $selectedCategoryId = $request->get('category');
@@ -124,7 +125,7 @@ class PageViewController extends Controller
             $selectedFile = MediaFile::find($fileId);
         }
 
-        return view('content-view.media', compact('categories', 'selectedCategory', 'files', 'selectedFile'));
+        return view('content-view.media', compact('categories', 'selectedCategory', 'files', 'selectedFile','heroData'));
     }
 
     public function mediadownload(MediaFile $mediafile)
@@ -142,6 +143,7 @@ class PageViewController extends Controller
      */
     public function downloads()
     {
+        $heroData = HeroSectionController::getHeroData('corprofile.Downloads');
         $categories = DownloadCategory::active()
         ->ordered()
         ->with(['activeDownloadFiles' => function($query) {
@@ -149,7 +151,7 @@ class PageViewController extends Controller
         }])
         ->get();
 
-    return view('content-view.downloads', compact('categories'));
+    return view('content-view.downloads', compact('categories','heroData'));
     }
 
 
@@ -161,9 +163,10 @@ class PageViewController extends Controller
         $search = $request->get('search');
         
         $vacancies = Vacancy::with('location')
-            ->search($search)
-            ->recent()
-            ->get();
+        ->search($search)
+        ->recent()
+        ->paginate(3)
+        ->withQueryString();
 
         return view('content-view.vacancy', compact('vacancies', 'search'));
     }
