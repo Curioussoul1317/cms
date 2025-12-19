@@ -31,7 +31,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\FrontendController;
 
 use App\Http\Controllers\NewsController;
-
+use App\Http\Controllers\Admin\SyncController;
   Route::get('/check-auth', function() {
     return response()->json([
         'authenticated' => Auth::check()
@@ -282,7 +282,24 @@ Route::post('/contents/update-order', [PageContentController::class, 'updateOrde
 
 
   
+Route::get('/sync', [SyncController::class, 'index'])->name('sync.index');
 
+// Health Check (AJAX)
+Route::get('/sync/health', [SyncController::class, 'checkHealth'])->name('sync.health');
+
+// Sync All Tables
+Route::post('/sync/all', [SyncController::class, 'syncAll'])->name('sync.all');
+
+// Sync Single Table
+Route::post('/sync/table', [SyncController::class, 'syncTable'])->name('sync.table');
+
+// Sync Modified Only
+Route::post('/sync/modified', [SyncController::class, 'syncModified'])->name('sync.modified');
+
+// Sync Logs
+Route::get('/sync/logs', [SyncController::class, 'logs'])->name('sync.logs');
+Route::get('/sync/logs/{log}', [SyncController::class, 'logDetails'])->name('sync.log-details');
+Route::delete('/sync/logs/clear', [SyncController::class, 'clearLogs'])->name('sync.clear-logs');
 
 
 

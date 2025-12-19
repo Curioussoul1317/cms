@@ -221,7 +221,8 @@
                       </div> 
                     </div>
                   </div>
-                </li>  
+                </li> 
+                <a href="{{ route('sync.index') }}">Database Sync</a> 
               </ul> 
             </div>
           </div>
