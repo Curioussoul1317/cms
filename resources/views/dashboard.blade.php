@@ -1,34 +1,52 @@
 @extends('layouts.app')
 
+@section('title', 'Content Hierarchy')
+
 @section('content')
- 
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
             <div class="col">
-                <div class="page-pretitle">
-                    Content Hierarchy
-                </div>
-                <h2 class="page-title">
-                    View all categories and pages
-                </h2>
-            </div> 
-
+                <div class="page-pretitle">CMS</div>
+                <h2 class="page-title">Content Hierarchy</h2>
+            </div>
             <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list"> 
+                <div class="btn-list">
                     <a href="{{ route('main-categories.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                        <i class="ti ti-plus me-1"></i>
                         Main Category
-                    </a> 
+                    </a>
+                    <a href="{{ route('main-categories.create') }}" class="btn btn-primary d-sm-none btn-icon" aria-label="Add Main Category">
+                        <i class="ti ti-plus"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
 
-<div class="page-body"> 
+<div class="page-body">
     <div class="container-xl">
- 
+        {{-- Alerts --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="d-flex">
+                    <div><i class="ti ti-check me-2"></i></div>
+                    <div>{{ session('success') }}</div>
+                </div>
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="d-flex">
+                    <div><i class="ti ti-alert-circle me-2"></i></div>
+                    <div>{{ session('error') }}</div>
+                </div>
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+            </div>
+        @endif
 
         @if($mainCategories && $mainCategories->count() > 0)
             <div class="row row-deck row-cards">
@@ -40,532 +58,295 @@
                                 <div class="row align-items-center w-100">
                                     <div class="col">
                                         <div class="d-flex align-items-center">
-                                            <span class="avatar avatar-md me-3 text-white" style="background-color: #206bc4;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 3h-6a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1z" /><path d="M20 3h-6a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1z" /><path d="M10 13h-6a1 1 0 0 0 -1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1 -1v-6a1 1 0 0 0 -1 -1z" /><path d="M17 13a4 4 0 1 1 -3.995 4.2l-.005 -.2l.005 -.2a4 4 0 0 1 3.995 -3.8z" /></svg>
+                                            <span class="avatar avatar-md bg-primary text-white me-3">
+                                                <i class="ti ti-category"></i>
                                             </span>
                                             <div>
                                                 <h3 class="card-title mb-1">{{ $mainCategory->name }}</h3>
-                                                <div class="text-muted small">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></svg>
-                                                    {{ $mainCategory->pages->count() }} Pages
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="text-secondary small">
+                                                        <i class="ti ti-folder me-1"></i>
+                                                        {{ $mainCategory->pages->count() }} Pages
+                                                    </span>
+                                                    {{-- Status Badges --}}
+                                                    @if($mainCategory->is_approved)
+                                                        <span class="badge bg-green-lt">
+                                                            <i class="ti ti-check me-1"></i>Approved
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-yellow-lt">
+                                                            <i class="ti ti-clock me-1"></i>Pending
+                                                        </span>
+                                                    @endif
+                                                    @if($mainCategory->is_published)
+                                                        <span class="badge bg-blue-lt">
+                                                            <i class="ti ti-world me-1"></i>Published
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-secondary-lt">
+                                                            <i class="ti ti-world-off me-1"></i>Draft
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                   
                                     <div class="col-auto">
                                         <div class="btn-list">
-
-                                        <a href="{{ route('main-categories.edit', $mainCategory) }}" 
-                                                class="btn btn-icon btn-yellow btn-sm"
-                                                onclick="event.stopPropagation();"
-                                                data-bs-toggle="tooltip"
-                                                title="Edit Main Category">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                            </a> 
-
-                                        @if($mainCategory->id==1) 
-                                        @else 
-
-                                            <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}" 
-                                               class="btn btn-primary btn-sm"
+                                            <a href="{{ route('main-categories.edit', $mainCategory) }}" 
+                                               class="btn btn-icon btn-ghost-warning btn-sm"
                                                onclick="event.stopPropagation();"
                                                data-bs-toggle="tooltip"
-                                               title="Create New Page">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                                                Create Page
+                                               title="Edit Main Category">
+                                                <i class="ti ti-edit"></i>
                                             </a>
-                                            
-                                            @endif 
-                                              @if(!$mainCategory->is_approved)
-                                                
-                                                
-                                                    <button type="submit" class="btn btn-success btn-sm">
-                                                        <i class="ti ti-check"></i> Approve
-                                                    </button> 
-                                            @else
-                                                
-                                                    <button type="submit" class="btn btn-warning btn-sm"  >
-                                                        <i class="ti ti-x"></i> Unapprove
-                                                    </button>                                         
-                                                @if(!$mainCategory->is_published)
-                                                   
-                                                        <button type="submit" class="btn btn-primary btn-sm">
-                                                            <i class="ti ti-world"></i> Publish
-                                                        </button> 
-                                                @else 
-                                                        <button type="submit" class="btn btn-secondary btn-sm">
-                                                            <i class="ti ti-world-off"></i> Unpublish
-                                                        </button> 
-                                                @endif
+                                            @if($mainCategory->id != 1)
+                                                <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}" 
+                                                   class="btn btn-primary btn-sm"
+                                                   onclick="event.stopPropagation();"
+                                                   data-bs-toggle="tooltip"
+                                                   title="Create New Page">
+                                                    <i class="ti ti-plus me-1"></i>
+                                                    Create Page
+                                                </a>
                                             @endif
                                         </div>
                                     </div>
-                                                                    
                                 </div>
                             </div>
 
-                            {{-- Pages --}} 
-<div class="card-body">
-    @if($mainCategory->pages && $mainCategory->pages->whereNull('parent_id')->count() > 0)
-        <div class="divide-y">
-            @foreach($mainCategory->pages->whereNull('parent_id') as $page)
-                {{-- Page Card --}}
-                <div class="card card-sm mb-3 shadow-sm">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                @if($page->has_children)
-                                    {{-- Page with children - clickable --}}
-                                    <div class="d-flex align-items-center" 
-                                         onclick="togglePage({{ $page->id }})"
-                                         role="button">
-                                        <span class="avatar avatar-sm me-3 text-white" style="background-color: #2fb344;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-folders"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2" /></svg>
-                                        </span>
-                                        <div>
-                                            <h4 class="mb-1">{{ $page->name }}</h4>
-                                            <div class="text-muted small">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                                                {{ $page->children->count() }} Child Pages
-                                                @if($page->contents && $page->contents->count() > 0)
-                                                    • {{ $page->contents->count() }} Content Blocks
-                                                @endif 
-                                            </div> 
-                                        </div>
-                                    </div>
-                                @else
-                                    {{-- Single page - not clickable --}}
-                                    <div class="d-flex align-items-center">
-                                        <span class="avatar avatar-sm me-3 text-white" style="background-color: #4299e1;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-                                        </span>
-                                        <div>
-                                            <h4 class="mb-1">{{ $page->name }}</h4>
-                                            <div class="text-muted small">
-                                                @if($page->contents && $page->contents->count() > 0)
-                                                    {{ $page->contents->count() }} Content Blocks
-                                                @else
-                                                    No content blocks
-                                                @endif 
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="col-auto">
-                                <div class="btn-list">
-                                    {{-- View Public Page --}}
-                                    @if(!$page->has_children)
-                                    <a href="{{ route('content.show', ['page', $page->id]) }}" 
-                                        class="btn btn-icon btn-cyan btn-sm"
-                                        target="_blank" rel="noopener noreferrer"
-                                        onclick="event.stopPropagation();"
-                                        data-bs-toggle="tooltip"
-                                        title="View Public Page">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                    </a> 
-                                    @endif
-                                    
-                                    {{-- Manage Content Blocks --}}
-                                    @if(!$page->has_children)
-                                    <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $page->id]) }}" 
-                                       class="btn btn-icon btn-indigo btn-sm"
-                                       onclick="event.stopPropagation();"
-                                       data-bs-toggle="tooltip"
-                                       title="Manage Content Blocks">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M4 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                                    </a> 
-                                    @endif
-
-                                    {{-- Edit Page --}} 
-                                    <a href="{{ route('pages.edit', $page) }}" 
-                                       class="btn btn-icon btn-yellow btn-sm"
-                                       onclick="event.stopPropagation();"
-                                       data-bs-toggle="tooltip"
-                                       title="Edit Page">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                    </a> 
-
-                                    {{-- Create Child Page (only if has_children is true) --}}
-                                    @if($page->has_children)
-                                        <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
-                                           class="btn btn-icon btn-success btn-sm"
-                                           onclick="event.stopPropagation();"
-                                           data-bs-toggle="tooltip"
-                                           title="Create Child Page">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                                        </a>
-                                    @endif
-
-                                    
-                                   
-
-
-                                    <div class="btn-group" role="group">
-    @if(!$page->is_approved)
-        {{-- Show Approve Button --}} 
-            <button type="submit" class="btn btn-success btn-sm">
-                <i class="ti ti-check"></i> Approve
-            </button> 
-    @else 
-            <button type="submit" class="btn btn-warning btn-sm"  >
-                <i class="ti ti-x"></i> Unapprove
-            </button> 
-
-        {{-- Show Publish/Unpublish Buttons --}}
-        @if(!$page->is_published) 
-                <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="ti ti-world"></i> Publish
-                </button> 
-        @else 
-                <button type="submit" class="btn btn-secondary btn-sm">
-                    <i class="ti ti-world-off"></i> Unpublish
-                </button> 
-        @endif
-    @endif
-</div>
-
-
-                                    {{-- Toggle Arrow (only if has children) --}}
-                                    <!-- @if($page->has_children && $page->children->count() > 0)
-                                        <button class="btn btn-icon btn-ghost-secondary btn-sm" 
-                                                onclick="togglePage({{ $page->id }}); event.stopPropagation();" 
-                                                type="button"
-                                                data-bs-toggle="tooltip"
-                                                title="Toggle Child Pages">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" id="arrow-{{ $page->id }}" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg>
-                                        </button>
-                                    @endif -->
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Child Pages --}}
-                        <div id="page-{{ $page->id }}" class="mt-3 d-none">
-                            @if($page->children && $page->children->count() > 0)
-                                <div class="list-group list-group-flush">
-                                    @foreach($page->children as $childPage)
-                                        {{-- Child Page Item --}}
-                                        <div class="list-group-item">
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="avatar avatar-sm me-3 text-white" style="background-color: #4299e1;">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-                                                        </span>
-                                                        <div>
-                                                            <div class="fw-bold">{{ $childPage->name }}</div>
-                                                            <div class="text-muted small">
-                                                                @if($childPage->contents && $childPage->contents->count() > 0)
-                                                                    {{ $childPage->contents->count() }} Content Blocks
-                                                                @else
-                                                                    No content blocks
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="btn-list">
-                                                        <a href="{{ route('content.show', ['page', $childPage->id]) }}" 
-                                                            class="btn btn-icon btn-cyan btn-sm"
-                                                            target="_blank" rel="noopener noreferrer"
-                                                            data-bs-toggle="tooltip"
-                                                            title="View Public Page">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                                        </a>
-                                                     
-                                                        <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $childPage->id]) }}" 
-                                                           class="btn btn-icon btn-indigo btn-sm"
-                                                           data-bs-toggle="tooltip"
-                                                           title="Manage Content Blocks">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M4 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                                                        </a>
-
-                                                        <a href="{{ route('pages.edit', $childPage) }}" 
-                                                           class="btn btn-icon btn-yellow btn-sm"
-                                                           data-bs-toggle="tooltip"
-                                                           title="Edit Page">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                        </a>
-
-                                                        <div class="btn-group" role="group">
-    @if(!$page->is_approved) 
-            <button type="submit" class="btn btn-success btn-sm">
-                <i class="ti ti-check"></i> Approve
-            </button> 
-    @else 
-            <button type="submit" class="btn btn-warning btn-sm"  >
-                <i class="ti ti-x"></i> Unapprove
-            </button> 
- 
-        @if(!$page->is_published) 
-                <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="ti ti-world"></i> Publish
-                </button> 
-        @else 
-                <button type="submit" class="btn btn-secondary btn-sm">
-                    <i class="ti ti-world-off"></i> Unpublish
-                </button> 
-        @endif
-    @endif
-</div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <div class="empty">
-                                    <div class="empty-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-                                    </div>
-                                    <p class="empty-title">No child pages yet</p>
-                                    <p class="empty-subtitle text-muted">
-                                        Add a child page under this page
-                                    </p>
-                                    <div class="empty-action">
-                                        <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
-                                           class="btn btn-primary">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                            Add Child Page
-                                        </a>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @else
-        {{-- No Pages Yet --}}
-        <div class="empty">
-            <div class="empty-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-            </div>
-            <p class="empty-title">No pages yet</p>
-            <p class="empty-subtitle text-muted">
-                Create pages to organize your content
-            </p>
-            <div class="empty-action">
-                <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}" 
-                   class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Add Page
-                </a>
-            </div>
-        </div>
-    @endif
-</div>
-                            <!-- <div class="card-body">
-                                @if($mainCategory->pages && $mainCategory->pages->count() > 0)
+                            {{-- Pages --}}
+                            <div class="card-body">
+                                @if($mainCategory->pages && $mainCategory->pages->whereNull('parent_id')->count() > 0)
                                     <div class="divide-y">
-                                        @foreach($mainCategory->pages as $page)
+                                        @foreach($mainCategory->pages->whereNull('parent_id') as $page)
                                             {{-- Page Card --}}
                                             <div class="card card-sm mb-3 shadow-sm">
                                                 <div class="card-body">
                                                     <div class="row align-items-center">
                                                         <div class="col">
-                                                            @if($page->has_children && $page->children->count() > 0)
+                                                            @if($page->has_children)
                                                                 {{-- Page with children - clickable --}}
                                                                 <div class="d-flex align-items-center" 
                                                                      onclick="togglePage({{ $page->id }})"
-                                                                     role="button">
-                                                                    <span class="avatar avatar-sm me-3 text-white" style="background-color: #2fb344;">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-folders"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2" /></svg>
+                                                                     role="button"
+                                                                     style="cursor: pointer;">
+                                                                    <span class="avatar avatar-sm bg-green text-white me-3">
+                                                                        <i class="ti ti-folders"></i>
                                                                     </span>
-                                                                    <div>
-                                                                        <h4 class="mb-1">{{ $page->name }}</h4>
-                                                                        <div class="text-muted small">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    <div class="flex-fill">
+                                                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                                                            <h4 class="mb-0">{{ $page->name }}</h4>
+                                                                            {{-- Status Badges --}}
+                                                                            @if($page->is_approved)
+                                                                                <span class="badge bg-green-lt badge-sm">Approved</span>
+                                                                            @else
+                                                                                <span class="badge bg-yellow-lt badge-sm">Pending</span>
+                                                                            @endif
+                                                                            @if($page->is_published)
+                                                                                <span class="badge bg-blue-lt badge-sm">Published</span>
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="text-secondary small">
+                                                                            <i class="ti ti-file-text me-1"></i>
                                                                             {{ $page->children->count() }} Child Pages
                                                                             @if($page->contents && $page->contents->count() > 0)
-                                                                                • {{ $page->contents->count() }} Content Blocks
-                                                                            @endif 
-                                                                        </div> 
+                                                                                <span class="mx-1">•</span>
+                                                                                {{ $page->contents->count() }} Content Blocks
+                                                                            @endif
+                                                                        </div>
                                                                     </div>
+                                                                    <i class="ti ti-chevron-down ms-2" id="arrow-{{ $page->id }}"></i>
                                                                 </div>
                                                             @else
-                                                                {{-- Single page - not clickable --}}   
-                                                                @if(!$page->parent_id)
-                                                                sdf
-                                                                @endif                                                            
+                                                                {{-- Single page - not clickable --}}
                                                                 <div class="d-flex align-items-center">
-                                                                    <span class="avatar avatar-sm me-3 text-white" style="background-color: #4299e1;">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                                                    <span class="avatar avatar-sm bg-azure text-white me-3">
+                                                                        <i class="ti ti-file"></i>
                                                                     </span>
                                                                     <div>
-                                                                        <h4 class="mb-1">{{ $page->name }}</h4>
-                                                                        <div class="text-muted small">
+                                                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                                                            <h4 class="mb-0">{{ $page->name }}</h4>
+                                                                            {{-- Status Badges --}}
+                                                                            @if($page->is_approved)
+                                                                                <span class="badge bg-green-lt badge-sm">Approved</span>
+                                                                            @else
+                                                                                <span class="badge bg-yellow-lt badge-sm">Pending</span>
+                                                                            @endif
+                                                                            @if($page->is_published)
+                                                                                <span class="badge bg-blue-lt badge-sm">Published</span>
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="text-secondary small">
                                                                             @if($page->contents && $page->contents->count() > 0)
+                                                                                <i class="ti ti-layout-list me-1"></i>
                                                                                 {{ $page->contents->count() }} Content Blocks
                                                                             @else
-                                                                                No content blocks
-                                                                            @endif 
+                                                                                <span class="text-muted">No content blocks</span>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endif
                                                         </div>
                                                         <div class="col-auto">
-                                                            <div class="btn-list">
+                                                            <div class="btn-list flex-nowrap">
                                                                 {{-- View Public Page --}}
-                                                                <a href="{{ route('content.show', ['page', $page->id]) }}" 
-                                                                    class="btn btn-icon btn-cyan btn-sm"
-                                                                    target="_blank" rel="noopener noreferrer"
-                                                                    onclick="event.stopPropagation();"
-                                                                    data-bs-toggle="tooltip"
-                                                                    title="View Public Page">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                                                </a> 
+                                                                @if(!$page->has_children)
+                                                                    <a href="{{ route('content.show', ['page', $page->id]) }}" 
+                                                                       class="btn btn-icon btn-ghost-cyan btn-sm"
+                                                                       target="_blank" 
+                                                                       rel="noopener noreferrer"
+                                                                       onclick="event.stopPropagation();"
+                                                                       data-bs-toggle="tooltip"
+                                                                       title="View Public Page">
+                                                                        <i class="ti ti-eye"></i>
+                                                                    </a>
+                                                                @endif
                                                                 
                                                                 {{-- Manage Content Blocks --}}
                                                                 @if(!$page->has_children)
-                                                                <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $page->id]) }}" 
-                                                                   class="btn btn-icon btn-indigo btn-sm"
-                                                                   onclick="event.stopPropagation();"
-                                                                   data-bs-toggle="tooltip"
-                                                                   title="Manage Content Blocks">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M4 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                                                                </a> 
-                                                                @endif
-
-                                                                {{-- Create Child Page (only if has_children is true) --}}
-                                                                @if($page->has_children)
-                                                                    <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
-                                                                       class="btn btn-icon btn-success btn-sm"
+                                                                    <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $page->id]) }}" 
+                                                                       class="btn btn-icon btn-ghost-indigo btn-sm"
                                                                        onclick="event.stopPropagation();"
                                                                        data-bs-toggle="tooltip"
-                                                                       title="Create Child Page">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                                                                       title="Manage Content Blocks">
+                                                                        <i class="ti ti-layout-grid"></i>
                                                                     </a>
                                                                 @endif
 
                                                                 {{-- Edit Page --}}
                                                                 <a href="{{ route('pages.edit', $page) }}" 
-                                                                   class="btn btn-icon btn-yellow btn-sm"
+                                                                   class="btn btn-icon btn-ghost-warning btn-sm"
                                                                    onclick="event.stopPropagation();"
                                                                    data-bs-toggle="tooltip"
                                                                    title="Edit Page">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                    <i class="ti ti-edit"></i>
                                                                 </a>
 
-                                                                {{-- Toggle Arrow (only if has children) --}}
-                                                                @if($page->has_children && $page->children->count() > 0)
-                                                                    <button class="btn btn-icon btn-ghost-secondary btn-sm" 
-                                                                            onclick="togglePage({{ $page->id }}); event.stopPropagation();" 
-                                                                            type="button"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="Toggle Child Pages">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" id="arrow-{{ $page->id }}" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg>
-                                                                    </button>
+                                                                {{-- Create Child Page (only if has_children is true) --}}
+                                                                @if($page->has_children)
+                                                                    <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
+                                                                       class="btn btn-icon btn-ghost-success btn-sm"
+                                                                       onclick="event.stopPropagation();"
+                                                                       data-bs-toggle="tooltip"
+                                                                       title="Create Child Page">
+                                                                        <i class="ti ti-plus"></i>
+                                                                    </a>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    {{-- Child Pages --}}
-                                                    <div id="page-{{ $page->id }}" class="mt-3 d-none">
-                                                        @if($page->children && $page->children->count() > 0)
-                                                            <div class="list-group list-group-flush">
-                                                                @foreach($page->children as $childPage)
-                                                                    {{-- Child Page Item --}}
-                                                                    <div class="list-group-item">
-                                                                        <div class="row align-items-center">
-                                                                            <div class="col">
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <span class="avatar avatar-sm me-3 text-white" style="background-color: #4299e1;">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-                                                                                    </span>
-                                                                                    <div>
-                                                                                        <div class="fw-bold">{{ $childPage->name }}</div>
-                                                                                        <div class="text-muted small">
-                                                                                            @if($childPage->contents && $childPage->contents->count() > 0)
-                                                                                                {{ $childPage->contents->count() }} Content Blocks
-                                                                                            @else
-                                                                                                No content blocks
-                                                                                            @endif
+                                                    {{-- Child Pages (collapsible) --}}
+                                                    @if($page->has_children)
+                                                        <div id="page-{{ $page->id }}" class="mt-3 d-none">
+                                                            @if($page->children && $page->children->count() > 0)
+                                                                <div class="list-group list-group-flush">
+                                                                    @foreach($page->children as $childPage)
+                                                                        <div class="list-group-item bg-light">
+                                                                            <div class="row align-items-center">
+                                                                                <div class="col">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <span class="avatar avatar-sm bg-azure text-white me-3">
+                                                                                            <i class="ti ti-file"></i>
+                                                                                        </span>
+                                                                                        <div>
+                                                                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                                                                <div class="fw-bold">{{ $childPage->name }}</div>
+                                                                                                {{-- Status Badges --}}
+                                                                                                @if($childPage->is_approved)
+                                                                                                    <span class="badge bg-green-lt badge-sm">Approved</span>
+                                                                                                @else
+                                                                                                    <span class="badge bg-yellow-lt badge-sm">Pending</span>
+                                                                                                @endif
+                                                                                                @if($childPage->is_published)
+                                                                                                    <span class="badge bg-blue-lt badge-sm">Published</span>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                            <div class="text-secondary small">
+                                                                                                @if($childPage->contents && $childPage->contents->count() > 0)
+                                                                                                    <i class="ti ti-layout-list me-1"></i>
+                                                                                                    {{ $childPage->contents->count() }} Content Blocks
+                                                                                                @else
+                                                                                                    <span class="text-muted">No content blocks</span>
+                                                                                                @endif
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="col-auto">
-                                                                                <div class="btn-list">
-                                                                                    <a href="{{ route('content.show', ['page', $childPage->id]) }}" 
-                                                                                        class="btn btn-icon btn-cyan btn-sm"
-                                                                                        target="_blank" rel="noopener noreferrer"
-                                                                                        data-bs-toggle="tooltip"
-                                                                                        title="View Public Page">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                                                                    </a>
-                                                                                 
-                                                                                    <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $childPage->id]) }}" 
-                                                                                       class="btn btn-icon btn-indigo btn-sm"
-                                                                                       data-bs-toggle="tooltip"
-                                                                                       title="Manage Content Blocks">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M4 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M14 14m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /></svg>
-                                                                                    </a>
-
-                                                                                    <a href="{{ route('pages.edit', $childPage) }}" 
-                                                                                       class="btn btn-icon btn-yellow btn-sm"
-                                                                                       data-bs-toggle="tooltip"
-                                                                                       title="Edit Page">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                                    </a>
+                                                                                <div class="col-auto">
+                                                                                    <div class="btn-list flex-nowrap">
+                                                                                        <a href="{{ route('content.show', ['page', $childPage->id]) }}" 
+                                                                                           class="btn btn-icon btn-ghost-cyan btn-sm"
+                                                                                           target="_blank" 
+                                                                                           rel="noopener noreferrer"
+                                                                                           data-bs-toggle="tooltip"
+                                                                                           title="View Public Page">
+                                                                                            <i class="ti ti-eye"></i>
+                                                                                        </a>
+                                                                                        <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $childPage->id]) }}" 
+                                                                                           class="btn btn-icon btn-ghost-indigo btn-sm"
+                                                                                           data-bs-toggle="tooltip"
+                                                                                           title="Manage Content Blocks">
+                                                                                            <i class="ti ti-layout-grid"></i>
+                                                                                        </a>
+                                                                                        <a href="{{ route('pages.edit', $childPage) }}" 
+                                                                                           class="btn btn-icon btn-ghost-warning btn-sm"
+                                                                                           data-bs-toggle="tooltip"
+                                                                                           title="Edit Page">
+                                                                                            <i class="ti ti-edit"></i>
+                                                                                        </a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            @else
+                                                                <div class="empty py-4">
+                                                                    <div class="empty-icon">
+                                                                        <i class="ti ti-file-off" style="font-size: 2rem;"></i>
                                                                     </div>
-                                                                @endforeach
-                                                            </div>
-                                                        @else
-                                                            <div class="empty">
-                                                                <div class="empty-icon">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                                                    <p class="empty-title">No child pages yet</p>
+                                                                    <p class="empty-subtitle text-secondary">
+                                                                        Add a child page under this page
+                                                                    </p>
+                                                                    <div class="empty-action">
+                                                                        <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
+                                                                           class="btn btn-primary btn-sm">
+                                                                            <i class="ti ti-plus me-1"></i>
+                                                                            Add Child Page
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                                <p class="empty-title">No child pages yet</p>
-                                                                <p class="empty-subtitle text-muted">
-                                                                    Add a child page under this page
-                                                                </p>
-                                                                <div class="empty-action">
-                                                                    <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
-                                                                       class="btn btn-primary">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                                                        Add Child Page
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    </div>
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endforeach
                                     </div>
                                 @else
                                     {{-- No Pages Yet --}}
-                                    <div class="empty">
+                                    <div class="empty py-4">
                                         <div class="empty-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                            <i class="ti ti-file-off" style="font-size: 2rem;"></i>
                                         </div>
                                         <p class="empty-title">No pages yet</p>
-                                        <p class="empty-subtitle text-muted">
+                                        <p class="empty-subtitle text-secondary">
                                             Create pages to organize your content
                                         </p>
                                         <div class="empty-action">
                                             <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}" 
                                                class="btn btn-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                                <i class="ti ti-plus me-1"></i>
                                                 Add Page
                                             </a>
                                         </div>
                                     </div>
                                 @endif
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -573,53 +354,52 @@
         @else
             {{-- No Main Categories --}}
             <div class="card">
-                <div class="empty">
-                    <div class="empty-img">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 24 24'%3E%3Cpath fill='%23d1d5db' d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z'/%3E%3C/svg%3E" 
-                             alt="No categories" 
-                             height="120">
-                    </div>
-                    <p class="empty-title">No categories yet</p>
-                    <p class="empty-subtitle text-muted">
-                        Get started by creating a main category to organize your content
-                    </p>
-                    <div class="empty-action">
-                        <a href="{{ route('main-categories.create') }}" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                            Create Main Category
-                        </a>
+                <div class="card-body">
+                    <div class="empty py-5">
+                        <div class="empty-icon">
+                            <i class="ti ti-folder-off" style="font-size: 3rem;"></i>
+                        </div>
+                        <p class="empty-title">No categories yet</p>
+                        <p class="empty-subtitle text-secondary">
+                            Get started by creating a main category to organize your content
+                        </p>
+                        <div class="empty-action">
+                            <a href="{{ route('main-categories.create') }}" class="btn btn-primary">
+                                <i class="ti ti-plus me-1"></i>
+                                Create Main Category
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         @endif
-
     </div>
 </div>
-
-<script>
-function togglePage(id) {
-    const content = document.getElementById('page-' + id);
-    const arrow = document.getElementById('arrow-' + id);
-    
-    if (content.classList.contains('d-none')) {
-        content.classList.remove('d-none');
-        // Change arrow to up
-        arrow.innerHTML = '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" />';
-    } else {
-        content.classList.add('d-none');
-        // Change arrow to down
-        arrow.innerHTML = '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" />';
-    }
-}
-
-// Initialize tooltips and optionally expand first page
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Bootstrap tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
-</script>
-
 @endsection
+
+@push('scripts')
+<script>
+    function togglePage(id) {
+        const content = document.getElementById('page-' + id);
+        const arrow = document.getElementById('arrow-' + id);
+        
+        if (content.classList.contains('d-none')) {
+            content.classList.remove('d-none');
+            arrow.classList.remove('ti-chevron-down');
+            arrow.classList.add('ti-chevron-up');
+        } else {
+            content.classList.add('d-none');
+            arrow.classList.remove('ti-chevron-up');
+            arrow.classList.add('ti-chevron-down');
+        }
+    }
+
+    // Initialize tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+@endpush

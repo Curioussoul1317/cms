@@ -18,6 +18,7 @@ use App\Models\Vacancy;
 use App\Models\VacancyLocation;
 use App\Models\Location;
 use App\Models\Place;
+use App\Models\News;
 
 class PageViewController extends Controller
 {
@@ -184,4 +185,50 @@ class PageViewController extends Controller
 
     return view('content-view.locations-map', compact('locations'));
     }
+
+
+
+
+    public function news(Request $request, $identifier = null)
+    {
+        // Get the main news to display
+        if ($identifier) {
+            // Find by ID or slug
+            $news = News::public()
+                        ->where(function ($query) use ($identifier) {
+                            $query->where('id', $identifier)
+                                  ->orWhere('slug', $identifier);
+                        })
+                        ->with(['activeImages'])
+                        ->firstOrFail();
+        } else {
+            // Get the latest published news
+            $news = News::public()
+                        ->with(['activeImages'])
+                        ->latest('published_at')
+                        ->first();
+        }
+
+        // Get other news for the bottom section (excluding current)
+        $otherNews = News::public()
+                         ->when($news, function ($query) use ($news) {
+                             $query->where('id', '!=', $news->id);
+                         })
+                         ->latest('published_at')
+                         ->take(6)
+                         ->get();
+
+        // If no news exists at all
+      
+
+        // If no main news but others exist, use the first one
+        if (!$news && $otherNews->isNotEmpty()) {
+            $news = $otherNews->shift();
+        }
+
+        return view('content-view.news', compact('news', 'otherNews'));
+    }
+
+    
+
 }

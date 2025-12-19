@@ -1003,6 +1003,17 @@ body.mobile-nav-open {
                             <div class="category-info">
                                 <h3>{{ $page['name'] }}</h3>
                             </div>
+                            @else
+                           
+                            <a href="{{ route($child['route']) }}{{ isset($child['section']) ? '#' . $child['section'] : '' }}" class="subcategory-link">
+                               <div class="category-icon">
+                                <i class="{{ $page['icon'] ?? 'ti ti-folder' }}"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>{{ $page['name'] }}</h3>
+                            </div> 
+                            </a>
+
                         @endif
                     </div>
                     
@@ -1014,21 +1025,7 @@ body.mobile-nav-open {
                                 {{ $child['name'] }}
                             </a>
                             @endforeach
-                        </div>
-                        @else
-                        <div class="subcategory-links">
-                            @foreach($page['children'] as $child)                            
-                            <a href="{{ route($child['route']) }}{{ isset($child['section']) ? '#' . $child['section'] : '' }}" class="subcategory-link">
-                            <div class="category-icon">
-                            <i class="ti ti-circle-filled"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>{{ $child['name'] }}</h3>
-                            </div>
-                                
-                            </a>
-                            @endforeach
-                        </div>
+                        </div> 
                     @endif
                 </div>
             @endforeach

@@ -81,7 +81,7 @@ class NavigationComposer
                         'has_children' => false,
                         'icon' => 'ti ti-mail',
                         'children' => [
-                            ['name' => 'Latest Updates', 'route' => 'corprofile.Locations'],
+                            ['name' => 'Latest Updates', 'route' => 'corprofile.news'],
                         ]
                     ] 
                 ]

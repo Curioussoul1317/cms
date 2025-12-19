@@ -30,6 +30,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\FrontendController;
 
+use App\Http\Controllers\NewsController;
+
   Route::get('/check-auth', function() {
     return response()->json([
         'authenticated' => Auth::check()
@@ -61,7 +63,7 @@ Route::get('/content/{type}/{id}', [PageViewController::class, 'show'])->name('c
  
 
 // Corporate Profile Routes
-Route::prefix('corporate')->name('corprofile.')->group(function () {
+ Route::prefix('corporate')->name('corprofile.')->group(function () {
   // Corporate Profile
   Route::get('/our-company', [PageViewController::class, 'ourCompany'])->name('OurCompany');
   Route::get('/board-of-directors', [PageViewController::class, 'boardOfDirectors'])->name('BoardofDirectors');
@@ -80,6 +82,14 @@ Route::prefix('corporate')->name('corprofile.')->group(function () {
   
   // Careers
   Route::get('/open-vacancies', [PageViewController::class, 'openVacancies'])->name('OpenVacancies');
+
+  //  PUBLIC 
+  
+ 
+Route::get('/news/{identifier?}', [PageViewController::class, 'news'])->name('news');
+
+
+// END PUBLIC 
 });
 
 
@@ -187,21 +197,20 @@ Route::prefix('admin/vacancies')->name('vacancies.')->group(function () {
 
 
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+  Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
   Route::resource('locations', LocationController::class);
     
-  // Place CRUD
+ 
   Route::resource('places', PlaceController::class);
   Route::resource('hero-sections', HeroSectionController::class);
 });
 
 
-// Frontend Routes
+ 
 // Route::get('/', [FrontendController::class, 'locationsMap'])->name('home');
 Route::get('/locations', [FrontendController::class, 'locationsMap'])->name('locations.map');
 Route::get('/locations/{location:slug}/{place:slug}', [FrontendController::class, 'showPlace'])->name('locations.place.show');
-
-// AJAX Routes for Frontend
+ 
 Route::prefix('api')->group(function () {
     Route::get('/places/all', [FrontendController::class, 'getAllPlaces'])->name('api.places.all');
     Route::get('/places/location/slug/{slug}', [FrontendController::class, 'getPlacesBySlug']);
@@ -209,12 +218,26 @@ Route::prefix('api')->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () { 
+    
+  // News CRUD Routes
+  Route::resource('news', NewsController::class);
+  
+  // Workflow Routes
+  Route::patch('news/{news}/approve', [NewsController::class, 'approve'])->name('news.approve');
+  Route::patch('news/{news}/unapprove', [NewsController::class, 'unapprove'])->name('news.unapprove');
+  Route::patch('news/{news}/publish', [NewsController::class, 'publish'])->name('news.publish');
+  Route::patch('news/{news}/unpublish', [NewsController::class, 'unpublish'])->name('news.unpublish');
+  Route::patch('news/{news}/toggle-active', [NewsController::class, 'toggleActive'])->name('news.toggle-active');
+  
+  // Image Management (AJAX)
+  Route::delete('news/images/{image}', [NewsController::class, 'deleteImage'])->name('news.images.delete');
+  Route::post('news/images/order', [NewsController::class, 'updateImageOrder'])->name('news.images.order');
+ 
 
 
 
-
-
+ Route::middleware(['auth'])->group(function () { 
+ 
 
   Route::patch('{model}/{id}/approve', [ApproveAndPublishController::class, 'approve'])->name('approve');
   Route::patch('{model}/{id}/unapprove', [ApproveAndPublishController::class, 'unapprove'])->name('unapprove');
