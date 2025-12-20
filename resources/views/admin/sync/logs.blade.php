@@ -8,7 +8,7 @@
         <h3 class="mb-0">
             <i class="fas fa-history me-2"></i>Sync Logs
         </h3>
-        <a href="{{ route('admin.sync.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('sync.index') }}" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
         </a>
     </div>
@@ -16,7 +16,7 @@
     {{-- Filters --}}
     <div class="card mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.sync.logs') }}" method="GET" class="row g-3">
+            <form action="{{ route('sync.logs') }}" method="GET" class="row g-3">
                 <div class="col-md-3">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select">
@@ -42,7 +42,7 @@
                     <button type="submit" class="btn btn-primary me-2">
                         <i class="fas fa-search"></i> Filter
                     </button>
-                    <a href="{{ route('admin.sync.logs') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('sync.logs') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-times"></i>
                     </a>
                 </div>
@@ -185,7 +185,7 @@
             <h5 class="mb-0"><i class="fas fa-trash me-2"></i>Clear Old Logs</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.sync.clear-logs') }}" method="POST" class="row g-3 align-items-end"
+            <form action="{{ route('sync.clear-logs') }}" method="POST" class="row g-3 align-items-end"
                   onsubmit="return confirm('Are you sure you want to delete old logs?')">
                 @csrf
                 @method('DELETE')

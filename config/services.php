@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'sync' => [
+        'url' => env('SYNC_API_URL'),
+        'token' => env('SYNC_API_TOKEN'),
+        'timeout' => env('SYNC_TIMEOUT', 120),
+        'chunk_size' => env('SYNC_CHUNK_SIZE', 500),
+    ],
 
 ];

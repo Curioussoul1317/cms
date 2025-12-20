@@ -56,6 +56,8 @@ return new class extends Migration
             'is_published' => false,
             'published_by'=> null, 
             'published_at'=> now(),  
+            'created_at' => now(),   
+            'updated_at' => now(),
            
         ]);
     }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SyncLog extends Model
 {
     use HasFactory;
-
+    protected $connection = 'mysql_cms';
+    protected $table = 'sync_logs';
     protected $fillable = [
         'table_name',
         'sync_type',
@@ -19,7 +20,7 @@ class SyncLog extends Model
         'completed_at',
         'duration_seconds',
         'error_message',
-    ];
+    ]; 
 
     protected $casts = [
         'details' => 'array',

@@ -73,8 +73,7 @@
             </div>
         @endif
 
-        {{-- Publishing Controls Card (only show if not ID 1) --}}
-        @if($page->id != 1)
+     
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -154,8 +153,7 @@
                     @endif
                 </div>
             </div>
-        @endif
-
+    
         <form action="{{ route('pages.update', $page) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')

@@ -34,12 +34,14 @@ return new class extends Migration
             'order' => 0,
             'created_by'=> null, 
             'updated_by'=> null, 
-            'is_approved' => false,
+            'is_approved' => true,
             'approved_by'=> null, 
             'approved_at'=> now(),
-            'is_published' => false,
+            'is_published' => true,
             'published_by'=> null, 
             'published_at'=> now(),  
+            'created_at' => now(),   
+            'updated_at' => now(),
         ]);
     }
 

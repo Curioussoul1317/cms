@@ -88,7 +88,7 @@
                         @if($health['success'])
                             <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
                             <h5 class="text-success">Connected</h5>
-                            <p class="text-muted mb-0">App Two is reachable</p>
+                            <p class="text-muted mb-0">WAMCO Website is reachable</p>
                         @else
                             <i class="fas fa-times-circle text-danger fa-3x mb-3"></i>
                             <h5 class="text-danger">Disconnected</h5>
@@ -200,7 +200,7 @@
                     <tbody>
                         @foreach($tables as $table)
                             @php
-                                $count = \DB::table($table)->count();
+                                $count = \DB::connection('mysql_cms')->table($table)->count();
                             @endphp
                             <tr>
                                 <td><code>{{ $table }}</code></td>

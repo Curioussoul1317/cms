@@ -22,11 +22,6 @@ class DatabaseSyncService
     protected string $connection = 'mysql_cms';
 
     /**
-     * Disable SSL verification (set to true only for development!)
-     */
-    protected bool $skipSslVerification = true;
-
-    /**
      * Tables to sync with their primary keys
      * Format: 'table_name' => 'primary_key'
      */
@@ -129,14 +124,9 @@ class DatabaseSyncService
         }
 
         try {
-            $http = Http::withHeaders($this->getHeaders())->timeout(10);
-            
-            // Skip SSL verification for development
-            if ($this->skipSslVerification) {
-                $http = $http->withoutVerifying();
-            }
-            
-            $response = $http->get($this->syncUrl . '/health');
+            $response = Http::withHeaders($this->getHeaders())
+                ->timeout(10)
+                ->get($this->syncUrl . '/health');
 
             if ($response->successful()) {
                 return [
@@ -241,14 +231,9 @@ class DatabaseSyncService
                 return (array) $item;
             })->toArray();
 
-            $http = Http::withHeaders($this->getHeaders())->timeout($this->timeout);
-            
-            // Skip SSL verification for development
-            if ($this->skipSslVerification) {
-                $http = $http->withoutVerifying();
-            }
-            
-            $response = $http->post($this->syncUrl . '/receive', [
+            $response = Http::withHeaders($this->getHeaders())
+                ->timeout($this->timeout)
+                ->post($this->syncUrl . '/receive', [
                     'table' => $table,
                     'data' => $data,
                     'sync_type' => $type,
@@ -341,14 +326,9 @@ class DatabaseSyncService
                 $totalRecords += count($data);
 
                 try {
-                    $http = Http::withHeaders($this->getHeaders())->timeout($this->timeout);
-                    
-                    // Skip SSL verification for development
-                    if ($this->skipSslVerification) {
-                        $http = $http->withoutVerifying();
-                    }
-                    
-                    $response = $http->post($this->syncUrl . '/receive', [
+                    $response = Http::withHeaders($this->getHeaders())
+                        ->timeout($this->timeout)
+                        ->post($this->syncUrl . '/receive', [
                             'table' => $table,
                             'data' => $data,
                             'sync_type' => $type === 'full' ? 'incremental' : $type,

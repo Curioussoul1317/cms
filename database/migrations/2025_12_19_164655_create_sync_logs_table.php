@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    protected $connection = 'mysql_cms';
     public function up(): void
     {
         Schema::create('sync_logs', function (Blueprint $table) {
