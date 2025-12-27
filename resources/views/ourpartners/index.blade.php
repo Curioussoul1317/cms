@@ -151,7 +151,7 @@
                         </div>
                         <p class="empty-title">No partners found</p>
                         <p class="empty-subtitle text-secondary">
-                            Add your organization's partners and collaborators.
+                            Add  partners .
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('ourpartners.create') }}" class="btn btn-primary">

@@ -27,7 +27,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        {{-- Alerts --}}
+    
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <div class="d-flex">
@@ -53,7 +53,7 @@
                 @foreach($mainCategories as $mainCategory)
                     <div class="col-12">
                         <div class="card">
-                            {{-- Main Category Header --}}
+                           
                             <div class="card-header">
                                 <div class="row align-items-center w-100">
                                     <div class="col">
@@ -68,7 +68,7 @@
                                                         <i class="ti ti-folder me-1"></i>
                                                         {{ $mainCategory->pages->count() }} Pages
                                                     </span>
-                                                    {{-- Status Badges --}}
+                                                   
                                                     @if($mainCategory->is_approved)
                                                         <span class="badge bg-green-lt">
                                                             <i class="ti ti-check me-1"></i>Approved
@@ -115,18 +115,18 @@
                                 </div>
                             </div>
 
-                            {{-- Pages --}}
+                        
                             <div class="card-body">
                                 @if($mainCategory->pages && $mainCategory->pages->whereNull('parent_id')->count() > 0)
                                     <div class="divide-y">
                                         @foreach($mainCategory->pages->whereNull('parent_id') as $page)
-                                            {{-- Page Card --}}
+                                            
                                             <div class="card card-sm mb-3 shadow-sm">
                                                 <div class="card-body">
                                                     <div class="row align-items-center">
                                                         <div class="col">
                                                             @if($page->has_children)
-                                                                {{-- Page with children - clickable --}}
+                                                             
                                                                 <div class="d-flex align-items-center" 
                                                                      onclick="togglePage({{ $page->id }})"
                                                                      role="button"
@@ -137,7 +137,7 @@
                                                                     <div class="flex-fill">
                                                                         <div class="d-flex align-items-center gap-2 mb-1">
                                                                             <h4 class="mb-0">{{ $page->name }}</h4>
-                                                                            {{-- Status Badges --}}
+                                                                      
                                                                             @if($page->is_approved)
                                                                                 <span class="badge bg-green-lt badge-sm">Approved</span>
                                                                             @else
@@ -158,8 +158,7 @@
                                                                     </div>
                                                                     <i class="ti ti-chevron-down ms-2" id="arrow-{{ $page->id }}"></i>
                                                                 </div>
-                                                            @else
-                                                                {{-- Single page - not clickable --}}
+                                                            @else 
                                                                 <div class="d-flex align-items-center">
                                                                     <span class="avatar avatar-sm bg-azure text-white me-3">
                                                                         <i class="ti ti-file"></i>
@@ -167,7 +166,7 @@
                                                                     <div>
                                                                         <div class="d-flex align-items-center gap-2 mb-1">
                                                                             <h4 class="mb-0">{{ $page->name }}</h4>
-                                                                            {{-- Status Badges --}}
+                                                                   
                                                                             @if($page->is_approved)
                                                                                 <span class="badge bg-green-lt badge-sm">Approved</span>
                                                                             @else
@@ -191,7 +190,7 @@
                                                         </div>
                                                         <div class="col-auto">
                                                             <div class="btn-list flex-nowrap">
-                                                                {{-- View Public Page --}}
+                                                      
                                                                 @if(!$page->has_children)
                                                                     <a href="{{ route('content.show', ['page', $page->id]) }}" 
                                                                        class="btn btn-icon btn-ghost-cyan btn-sm"
@@ -204,7 +203,7 @@
                                                                     </a>
                                                                 @endif
                                                                 
-                                                                {{-- Manage Content Blocks --}}
+                                                      
                                                                 @if(!$page->has_children)
                                                                     <a href="{{ route('page-contents.index', ['type' => 'page', 'id' => $page->id]) }}" 
                                                                        class="btn btn-icon btn-ghost-indigo btn-sm"
@@ -215,7 +214,7 @@
                                                                     </a>
                                                                 @endif
 
-                                                                {{-- Edit Page --}}
+                                                    
                                                                 <a href="{{ route('pages.edit', $page) }}" 
                                                                    class="btn btn-icon btn-ghost-warning btn-sm"
                                                                    onclick="event.stopPropagation();"
@@ -223,8 +222,7 @@
                                                                    title="Edit Page">
                                                                     <i class="ti ti-edit"></i>
                                                                 </a>
-
-                                                                {{-- Create Child Page (only if has_children is true) --}}
+ 
                                                                 @if($page->has_children)
                                                                     <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}&parent_id={{ $page->id }}" 
                                                                        class="btn btn-icon btn-ghost-success btn-sm"
@@ -237,8 +235,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    {{-- Child Pages (collapsible) --}}
+ 
                                                     @if($page->has_children)
                                                         <div id="page-{{ $page->id }}" class="mt-3 d-none">
                                                             @if($page->children && $page->children->count() > 0)
@@ -254,7 +251,7 @@
                                                                                         <div>
                                                                                             <div class="d-flex align-items-center gap-2 mb-1">
                                                                                                 <div class="fw-bold">{{ $childPage->name }}</div>
-                                                                                                {{-- Status Badges --}}
+                                                                                          
                                                                                                 @if($childPage->is_approved)
                                                                                                     <span class="badge bg-green-lt badge-sm">Approved</span>
                                                                                                 @else
@@ -328,14 +325,14 @@
                                         @endforeach
                                     </div>
                                 @else
-                                    {{-- No Pages Yet --}}
+                                 
                                     <div class="empty py-4">
                                         <div class="empty-icon">
                                             <i class="ti ti-file-off" style="font-size: 2rem;"></i>
                                         </div>
                                         <p class="empty-title">No pages yet</p>
                                         <p class="empty-subtitle text-secondary">
-                                            Create pages to organize your content
+                                            Create pages to organize   content
                                         </p>
                                         <div class="empty-action">
                                             <a href="{{ route('pages.create') }}?main_category={{ $mainCategory->id }}" 
@@ -352,7 +349,7 @@
                 @endforeach
             </div>
         @else
-            {{-- No Main Categories --}}
+      
             <div class="card">
                 <div class="card-body">
                     <div class="empty py-5">
@@ -393,8 +390,7 @@
             arrow.classList.add('ti-chevron-down');
         }
     }
-
-    // Initialize tooltips
+ 
     document.addEventListener('DOMContentLoaded', function() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.map(function(tooltipTriggerEl) {

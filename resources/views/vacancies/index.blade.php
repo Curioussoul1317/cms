@@ -12,10 +12,10 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
-                    <a href="{{ route('vacancies.show') }}" class="btn btn-outline-secondary d-none d-sm-inline-block">
+                    <a href="{{ route('corprofile.OpenVacancies') }}" class="btn btn-outline-secondary d-none d-sm-inline-block">
                         <i class="ti ti-eye me-1"></i>
                         View Public Page
-                    </a>
+                    </a> 
                     <a href="{{ route('vacancylocations.index') }}" class="btn btn-outline-primary d-none d-sm-inline-block">
                         <i class="ti ti-map-pin me-1"></i>
                         Manage Locations
@@ -183,7 +183,7 @@
                         </div>
                         <p class="empty-title">No vacancies found</p>
                         <p class="empty-subtitle text-secondary">
-                            There are no job vacancies in the system yet. Start by creating your first vacancy posting.
+                            There are no job vacancies in the system yet. Start by creating vacancy posting.
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('vacancies.create') }}" class="btn btn-primary">

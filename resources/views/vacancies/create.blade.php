@@ -92,7 +92,7 @@
                                                value="{{ old('salary') }}"
                                                required>
                                     </div>
-                                    <small class="form-hint">Enter monthly salary amount</small>
+                                    <small class="form-hint">Enter salary amount</small>
                                     @error('salary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -122,10 +122,10 @@
                                         <input type="url" 
                                                name="url" 
                                                class="form-control @error('url') is-invalid @enderror" 
-                                               placeholder="https://example.com/apply"
+                                               placeholder="https://www.gazette.gov.mv/"
                                                value="{{ old('url') }}">
                                     </div>
-                                    <small class="form-hint">Link to the application page or job details (optional)</small>
+                                    <small class="form-hint">Link to the application details </small>
                                     @error('url')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -152,8 +152,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Clear Job Title</h4>
-                                    <p class="text-secondary small mb-0">Use a descriptive title that candidates will search for.</p>
+                                    <h4 class="mb-1">Clear Job Title</h4> 
                                 </div>
                             </div>
                             <div class="d-flex mb-3">
@@ -163,8 +162,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Set Deadlines</h4>
-                                    <p class="text-secondary small mb-0">Give candidates enough time to prepare applications.</p>
+                                    <h4 class="mb-1">Set Deadlines</h4> 
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -174,8 +172,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Transparent Salary</h4>
-                                    <p class="text-secondary small mb-0">Clear salary info attracts more qualified candidates.</p>
+                                    <h4 class="mb-1">Transparent Salary</h4> 
                                 </div>
                             </div>
                         </div>

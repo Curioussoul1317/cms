@@ -17,7 +17,7 @@ class LocationController extends Controller
             ->ordered()
             ->paginate(10);
 
-        return view('admin.locations.index', compact('locations'));
+        return view('locations.index', compact('locations'));
     }
 
     /**
@@ -25,7 +25,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('admin.locations.create');
+        return view('locations.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class LocationController extends Controller
         $validated['created_by'] = auth()->id();
         Location::create($validated);
 
-        return redirect()->route('admin.locations.index')
+        return redirect()->route('locations.index')
             ->with('success', 'Location created successfully.');
     }
 
@@ -59,7 +59,7 @@ class LocationController extends Controller
     {
         $location->load('places');
         
-        return view('admin.locations.show', compact('location'));
+        return view('locations.show', compact('location'));
     }
 
     /**
@@ -67,7 +67,7 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        return view('admin.locations.edit', compact('location'));
+        return view('locations.edit', compact('location'));
     }
 
     /**
@@ -89,7 +89,7 @@ class LocationController extends Controller
         $validated['updated_by'] = auth()->id();
         $location->update($validated);
 
-        return redirect()->route('admin.locations.index')
+        return redirect()->route('locations.index')
             ->with('success', 'Location updated successfully.');
     }
 
@@ -100,7 +100,7 @@ class LocationController extends Controller
     {
         $location->delete();
 
-        return redirect()->route('admin.locations.index')
+        return redirect()->route('locations.index')
             ->with('success', 'Location deleted successfully.');
     }
 }

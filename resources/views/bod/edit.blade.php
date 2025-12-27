@@ -192,8 +192,7 @@
                                     <textarea name="description" 
                                               class="form-control @error('description') is-invalid @enderror" 
                                               rows="5"
-                                              placeholder="Brief biography or description...">{{ old('description', $bod->description) }}</textarea>
-                                    <small class="form-hint">This will appear when hovering over the director's image on the public page.</small>
+                                              placeholder="Brief biography or description...">{{ old('description', $bod->description) }}</textarea> 
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

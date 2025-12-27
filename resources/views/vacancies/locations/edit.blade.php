@@ -48,6 +48,7 @@
     </button>
 </form>
 @endif
+ 
                     <form action="{{ route('vacancylocations.update', $vacancylocation) }}" method="POST">
                         @csrf
                         @method('PUT')

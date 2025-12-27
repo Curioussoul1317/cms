@@ -27,6 +27,7 @@
     </div>
 </div>
 
+ 
 <div class="page-body">
     <div class="container-xl">
         @if(session('success'))
@@ -54,6 +55,47 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-body">
+
+
+                        @if(!$location->is_approved)
+<form action="{{ route('approve', ['model' => 'vacancy-location', 'id' => $location->id]) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PATCH') 
+    <button type="submit" class="btn btn-success btn-sm">
+        <i class="fas fa-check"></i> Approve
+    </button>
+</form>
+@else
+<form action="{{ route('unapprove', ['model' => 'vacancy-location', 'id' => $location->id]) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PATCH')
+    <button type="submit" class="btn btn-warning btn-sm">
+        <i class="fas fa-times"></i> Unapprove
+    </button>
+</form>
+@endif
+
+@if(!$location->is_published)
+<form action="{{ route('publish', ['model' => 'vacancy-location', 'id' => $location->id]) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PATCH') 
+    <button type="submit" class="btn btn-primary btn-sm">
+        <i class="fas fa-upload"></i> Publish
+    </button>
+</form>
+@else
+<form action="{{ route('unpublish', ['model' => 'vacancy-location', 'id' => $location->id]) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PATCH')
+    <button type="submit" class="btn btn-secondary btn-sm">
+        <i class="fas fa-download"></i> Unpublish
+    </button>
+</form>
+@endif 
+
+
+
+
                             <div class="d-flex align-items-center mb-3">
                                 <div class="avatar bg-primary-lt me-3">
                                     <i class="ti ti-map-pin text-primary"></i>
@@ -111,6 +153,14 @@
                                                value="{{ $location->location_name }}"
                                                required>
                                     </div>
+                                    <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="is_active" 
+                                   name="is_active" value="1" 
+                                   {{ old('is_active', $location->is_active) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="is_active">
+                                Active
+                            </label>
+                        </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -132,7 +182,7 @@
                                 </div>
                                 <p class="empty-title">No locations found</p>
                                 <p class="empty-subtitle text-secondary">
-                                    Add locations to organize your job vacancies by office or region.
+                                    Add locations to organize vacancies by office or region.
                                 </p>
                                 <div class="empty-action">
                                     <button type="button" 
@@ -175,7 +225,15 @@
                                required>
                         <small class="form-hint">Enter a descriptive name for the job location.</small>
                     </div>
+                    <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="is_active" 
+                                   name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="is_active">
+                                Active
+                            </label>
+                        </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-ghost-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">

@@ -494,7 +494,7 @@
                                 <h3 class="vacancy-title">{{ $vacancy->title }}</h3>
 
                                 <!-- View Button -->
-                                <a href="{{ route('vacancies.show', $vacancy->slug) }}" class="vacancy-view-btn">
+                                <a href=" {{$vacancy->url}}" class="vacancy-view-btn">
                                     <i class="fa-solid fa-eye"></i>
                                     View
                                 </a>

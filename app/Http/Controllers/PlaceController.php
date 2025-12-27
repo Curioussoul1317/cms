@@ -24,7 +24,7 @@ class PlaceController extends Controller
         $places = $query->paginate(10);
         $locations = Location::ordered()->get();
 
-        return view('admin.places.index', compact('places', 'locations'));
+        return view('places.index', compact('places', 'locations'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PlaceController extends Controller
     {
         $locations = Location::active()->ordered()->get();
         
-        return view('admin.places.create', compact('locations'));
+        return view('places.create', compact('locations'));
     }
 
     /**
@@ -68,7 +68,7 @@ class PlaceController extends Controller
         $validated['created_by'] = auth()->id();
         Place::create($validated);
 
-        return redirect()->route('admin.places.index')
+        return redirect()->route('places.index')
             ->with('success', 'Place created successfully.');
     }
 
@@ -79,7 +79,7 @@ class PlaceController extends Controller
     {
         $place->load('location');
         
-        return view('admin.places.show', compact('place'));
+        return view('places.show', compact('place'));
     }
 
     /**
@@ -89,7 +89,7 @@ class PlaceController extends Controller
     {
         $locations = Location::active()->ordered()->get();
         
-        return view('admin.places.edit', compact('place', 'locations'));
+        return view('places.edit', compact('place', 'locations'));
     }
 
     /**
@@ -117,7 +117,7 @@ class PlaceController extends Controller
         $validated['updated_by'] = auth()->id();
         $place->update($validated);
 
-        return redirect()->route('admin.places.index')
+        return redirect()->route('places.index')
             ->with('success', 'Place updated successfully.');
     }
 
@@ -128,7 +128,7 @@ class PlaceController extends Controller
     { 
         $place->delete();
 
-        return redirect()->route('admin.places.index')
+        return redirect()->route('places.index')
             ->with('success', 'Place deleted successfully.');
     }
 

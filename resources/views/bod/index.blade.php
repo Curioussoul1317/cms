@@ -166,9 +166,9 @@
                         <div class="empty-icon">
                             <i class="ti ti-users-minus" style="font-size: 3rem;"></i>
                         </div>
-                        <p class="empty-title">No directors found</p>
+                        <p class="empty-title">No board members found</p>
                         <p class="empty-subtitle text-secondary">
-                            Add board members to display them on your public page.
+                            Add board members.
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('bod.create') }}" class="btn btn-primary">

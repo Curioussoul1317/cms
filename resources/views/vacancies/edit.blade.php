@@ -233,10 +233,10 @@
                                         <input type="url" 
                                                name="url" 
                                                class="form-control @error('url') is-invalid @enderror" 
-                                               placeholder="https://example.com/apply"
+                                               placeholder="https://www.gazette.gov.mv/"
                                                value="{{ old('url', $vacancy->url) }}">
                                     </div>
-                                    <small class="form-hint">Link to the application page or job details (optional)</small>
+                                    <small class="form-hint">Link to the application details </small>
                                     @error('url')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

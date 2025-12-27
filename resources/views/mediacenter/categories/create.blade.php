@@ -133,8 +133,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Organize Files</h4>
-                                    <p class="text-secondary small mb-0">Group related files into categories for easy access.</p>
+                                    <h4 class="mb-1">Organize Files</h4> 
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -144,8 +143,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Clear Names</h4>
-                                    <p class="text-secondary small mb-0">Use descriptive names for better organization.</p>
+                                    <h4 class="mb-1">Clear Names</h4> 
                                 </div>
                             </div>
                         </div>

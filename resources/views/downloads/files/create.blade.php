@@ -209,8 +209,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Bilingual Support</h4>
-                                    <p class="text-secondary small mb-0">Upload files in both languages when available.</p>
+                                    <h4 class="mb-1">Bilingual Files</h4> 
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -220,8 +219,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Descriptive Titles</h4>
-                                    <p class="text-secondary small mb-0">Use clear titles so users know what they're downloading.</p>
+                                    <h4 class="mb-1">Descriptive Titles</h4> 
                                 </div>
                             </div>
                         </div>

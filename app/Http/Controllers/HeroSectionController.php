@@ -16,13 +16,13 @@ class HeroSectionController extends Controller
             ->orderBy('section')
             ->paginate(15);
 
-        return view('admin.hero-sections.index', compact('heroSections'));
+        return view('hero-sections.index', compact('heroSections'));
     }
 
     public function create()
     {
         $availableRoutes = $this->getAvailableRoutes();
-        return view('admin.hero-sections.create', compact('availableRoutes'));
+        return view('hero-sections.create', compact('availableRoutes'));
     }
 
     public function store(Request $request)
@@ -59,19 +59,19 @@ class HeroSectionController extends Controller
         $validated['created_by'] = auth()->id();
         HeroSection::create($validated); 
 
-        return redirect()->route('admin.hero-sections.index')
+        return redirect()->route('hero-sections.index')
             ->with('success', 'Hero section created successfully!');
     }
 
     public function show(HeroSection $heroSection)
     {
-        return view('admin.hero-sections.show', compact('heroSection'));
+        return view('hero-sections.show', compact('heroSection'));
     }
 
     public function edit(HeroSection $heroSection)
     {
         $availableRoutes = $this->getAvailableRoutes();
-        return view('admin.hero-sections.edit', compact('heroSection', 'availableRoutes'));
+        return view('hero-sections.edit', compact('heroSection', 'availableRoutes'));
     }
 
     public function update(Request $request, HeroSection $heroSection)
@@ -112,7 +112,7 @@ class HeroSectionController extends Controller
         $validated['updated_by'] = auth()->id();
         $heroSection->update($validated);
 
-        return redirect()->route('admin.hero-sections.index')
+        return redirect()->route('hero-sections.index')
             ->with('success', 'Hero section updated successfully!');
     }
 
@@ -120,7 +120,7 @@ class HeroSectionController extends Controller
     {
         $heroSection->delete();
 
-        return redirect()->route('admin.hero-sections.index')
+        return redirect()->route('hero-sections.index')
             ->with('success', 'Hero section deleted successfully!');
     }
 

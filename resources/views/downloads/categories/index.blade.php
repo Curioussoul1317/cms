@@ -163,7 +163,7 @@
                         </div>
                         <p class="empty-title">No categories found</p>
                         <p class="empty-subtitle text-secondary">
-                            Create categories to organize your downloadable files.
+                            Create categories to organize  downloadable files.
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('downloadcategories.create') }}" class="btn btn-primary">

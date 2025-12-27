@@ -193,7 +193,7 @@
                         </div>
                         <p class="empty-title">No files found</p>
                         <p class="empty-subtitle text-secondary">
-                            Add downloadable files for users to access.
+                            Add downloadable files.
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('downloadfiles.create') }}" class="btn btn-primary">

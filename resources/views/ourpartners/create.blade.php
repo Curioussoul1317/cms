@@ -55,7 +55,7 @@
                                     <input type="text" 
                                            name="name" 
                                            class="form-control @error('name') is-invalid @enderror" 
-                                           placeholder="Enter partner or organization name..."
+                                           placeholder="Enter partner name..."
                                            value="{{ old('name') }}"
                                            required>
                                     @error('name')

@@ -168,8 +168,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Accurate Dates</h4>
-                                    <p class="text-secondary small mb-0">Use precise dates for important milestones.</p>
+                                    <h4 class="mb-1">Accurate Dates</h4> 
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -179,8 +178,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h4 class="mb-1">Add Images</h4>
-                                    <p class="text-secondary small mb-0">Visual content makes timelines more engaging.</p>
+                                    <h4 class="mb-1">Add Images</h4> 
                                 </div>
                             </div>
                         </div>

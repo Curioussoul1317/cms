@@ -68,7 +68,7 @@
                                     <input type="text" 
                                            name="title" 
                                            class="form-control @error('title') is-invalid @enderror" 
-                                           placeholder="e.g., Chairman, Director..."
+                                           placeholder="e.g., Director..."
                                            value="{{ old('title') }}"
                                            required>
                                     @error('title')
@@ -81,8 +81,7 @@
                                     <textarea name="description" 
                                               class="form-control @error('description') is-invalid @enderror" 
                                               rows="5"
-                                              placeholder="Brief biography or description...">{{ old('description') }}</textarea>
-                                    <small class="form-hint">This will appear when hovering over the director's image on the public page.</small>
+                                              placeholder="Brief biography or description...">{{ old('description') }}</textarea> 
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -132,7 +131,7 @@
                                        class="form-control @error('image') is-invalid @enderror" 
                                        accept="image/*"
                                        onchange="previewImage(this)">
-                                <small class="form-hint">Recommended: Square image (500x500px) for best circular display</small>
+                                <small class="form-hint">Recommended: Square image (500x500px)</small>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

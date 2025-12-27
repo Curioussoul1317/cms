@@ -41,12 +41,12 @@ class NewsController extends Controller
 
         $news = $query->paginate(15)->withQueryString();
 
-        return view('admin.news.index', compact('news'));
+        return view('news.index', compact('news'));
     }
 
     public function create()
     {
-        return view('admin.news.create');
+        return view('news.create');
     }
 
     public function store(Request $request)
@@ -101,7 +101,7 @@ class NewsController extends Controller
             DB::connection('mysql_cms')->commit();
 
             return redirect()
-                ->route('admin.news.index')
+                ->route('news.index')
                 ->with('success', 'News created successfully.');
 
         } catch (\Exception $e) {
@@ -115,13 +115,13 @@ class NewsController extends Controller
     public function show(News $news)
     {
         $news->load(['images', 'creator', 'updater', 'approver', 'publisher']);
-        return view('admin.news.show', compact('news'));
+        return view('news.show', compact('news'));
     }
 
     public function edit(News $news)
     {
         $news->load('images');
-        return view('admin.news.edit', compact('news'));
+        return view('news.edit', compact('news'));
     }
 
     public function update(Request $request, News $news)
@@ -207,7 +207,7 @@ class NewsController extends Controller
             DB::connection('mysql_cms')->commit();
 
             return redirect()
-                ->route('admin.news.index')
+                ->route('news.index')
                 ->with('success', 'News updated successfully.');
 
         } catch (\Exception $e) {
@@ -238,7 +238,7 @@ class NewsController extends Controller
             DB::connection('mysql_cms')->commit();
 
             return redirect()
-                ->route('admin.news.index')
+                ->route('news.index')
                 ->with('success', 'News deleted successfully.');
 
         } catch (\Exception $e) {

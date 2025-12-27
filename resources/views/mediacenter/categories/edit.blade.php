@@ -233,7 +233,7 @@
                                 <span class="form-check-label">Active</span>
                             </label>
                             <small class="form-hint d-block mt-2">
-                                When active, this category and its files will be visible on the media center.
+                                When active, this category media page.
                             </small>
                         </div>
                     </div>

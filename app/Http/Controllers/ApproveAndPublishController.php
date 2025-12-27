@@ -23,6 +23,9 @@ class ApproveAndPublishController extends Controller
         'page' => \App\Models\Page::class,
         'vacancy' => \App\Models\Vacancy::class,
         'vacancy-location' => \App\Models\VacancyLocation::class,
+        'location'=>\App\Models\Location::class,
+        'place'=>\App\Models\Place::class,
+        'news'=>\App\Models\News::class,
     ];
 
   

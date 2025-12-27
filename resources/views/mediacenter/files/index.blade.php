@@ -189,7 +189,7 @@
                         </div>
                         <p class="empty-title">No files found</p>
                         <p class="empty-subtitle text-secondary">
-                            Upload PDF files to share in the media center.
+                            Upload PDF files to share in the media page.
                         </p>
                         <div class="empty-action">
                             <a href="{{ route('mediafiles.create') }}" class="btn btn-primary">
